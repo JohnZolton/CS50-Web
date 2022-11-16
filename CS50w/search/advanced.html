@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Advanced</title>
+        <link rel = 'stylesheet' href='styles.css'>
+        <style>
+            .grid {
+                background-color: white;
+                display: grid;
+                padding: 20px;
+                grid-column-gap: 20px;
+                grid-row-gap: 10px;
+                grid-template-columns: 200px 200px auto;
+            }
+
+            .grid-item {
+                background-color: white;
+                font-size: 20px;
+                padding: 20px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body style="background-color: rgb(79, 76, 76);">
+        <div class="adv">
+            <div style="padding:5px">
+                <a href="index.html">Search</a>
+            </div>
+        </div>
+        <div class="logo", style="color: white">
+
+            <div class="advsub">
+                <div style="border: 10px; border-color: white;">
+                    <label for="name" style="padding-right: 66px;">All these words: </label>
+                    <input type="text" name="name" id="name" required style="margin:10px; background-color: rgb(79, 76, 76); color: white;">
+                </div>
+                <div>
+                    <label for="name" style="padding-right: 1px">This exact word or phrase: </label>
+                    <input type="text" name="name" id="name" required style="margin:10px;right: 100px;background-color: rgb(79, 76, 76)">
+                </div>
+                <div>
+                    <label for="name" style="padding-right:42px;">Any of these words: </label>
+                    <input type="text" name="name" id="name" required style="margin:10px;background-color: rgb(79, 76, 76); color: white;">
+                </div>
+                <div> 
+                    <label style="padding-right:35px" for="name">None of these words: </label>
+                    <input type="text" name="name" id="name" required style="margin:10px;background-color: rgb(79, 76, 76); color: white;">
+                </div>
+                <div style="text-align: right; padding-top: 4px; padding-right: 10px;">
+                    <input type="submit" value="Advanced Search" style="border-radius: 1px; background-color: rgb(4, 4, 224); padding: 7px; color: white">
+                </div>
+    
+            </div>
+            </div>
+        </div>
+    
+    </body>
+</html>
