@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+
 class User(AbstractUser):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
@@ -14,30 +15,34 @@ class User(AbstractUser):
 
 # auction listings
 class listings(models.Model):
-
-    item= models.CharField(max_length=50)
-    date= models.DateField(auto_now_add = True)
-    duration= models.DurationField()
-    seller= models.ManyToOneRel(User, on_delete=models.CASCADE, related_name="Seller")
+    id = models.AutoField(primary_key=True)
+    Title= models.CharField(max_length=50)
+    Description=models.CharField(max_length=300)
+    Starting_bid=models.IntegerField()
+    Image = models.CharField(max_length=100)
+    Category = models.CharField(max_length=20)
+    Duration= models.DurationField()
+    Seller= models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
-        return f'Item: {self.item}; Date: {self.date}; Seller: {self.seller}'
+        return f'Item: {self.Title}; Duration: {self.duration}; Seller: {self.seller}'
 
 # auction bids
 class bids(models.Model):
-
-    bidder= models.ForeignKey(User, on_delete=models.CASCADE, related_name='Bidder')
+    id = models.AutoField(primary_key=True)
+    bidder= models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    bid_time = models.TimeField(auto_now_add = True)
-    desired = models.ForeignKey(listings, on_delete=models.CASCADE, related_name='wants')
+    desired = models.ForeignKey(listings, on_delete=models.CASCADE)
+
     def __str__(self):
         return f'User: {self.bidder}; amount: {self.amount}; item: {self.desired}'
 
 # comments on auction bids
 class comments(models.Model):
-    onitem = models.ForeignKey(bids, on_delete=models.CASCADE, related_name='commenter')
+    id = models.AutoField(primary_key=True)
+    onitem = models.ForeignKey(bids, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User')
     text = models.CharField(max_length=140)
-    comment_time = models.TimeField()
+
 
     def __str__(self):
-        return f'Username: {self.user}; comment: {self.text}'
+        return f'Username: {self.user}; comment: {self.text}; item: {self.onitem}'

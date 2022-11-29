@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             model_name="bids",
             name="desired",
             field=models.ForeignKey(
-                default=django.utils.timezone.now,
+                default=1,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="wants",
                 to="auctions.listings",
