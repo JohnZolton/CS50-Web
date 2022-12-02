@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+import datetime
 
 
 class User(AbstractUser):
@@ -11,7 +11,7 @@ class User(AbstractUser):
     creditcard = models.CharField(max_length=19, blank=True, null=True, unique=True)
 
     def __str__(self):
-        return f'Username: {self.username}'
+        return f'{self.username}'
 
 # auction listings
 class listings(models.Model):
@@ -19,12 +19,13 @@ class listings(models.Model):
     Title= models.CharField(max_length=50)
     Description=models.CharField(max_length=300)
     Starting_bid=models.IntegerField()
-    Image = models.CharField(max_length=100)
+    Image = models.ImageField(upload_to='images/', null=False, blank=False)
     Category = models.CharField(max_length=20)
     Duration= models.DurationField()
+    Starttime = models.DateTimeField(auto_now_add=True)
     Seller= models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
-        return f'Item: {self.Title}; Duration: {self.duration}; Seller: {self.seller}'
+        return f'Item: {self.Title}; Duration: {self.Duration}; Seller: {self.Seller}'
 
 # auction bids
 class bids(models.Model):

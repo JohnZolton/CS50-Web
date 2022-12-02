@@ -13,7 +13,7 @@ class NewList(forms.Form):
     Title = forms.CharField(label='Title', max_length=100, required=True)
     Description = forms.CharField(label='Description', max_length=100, required=True)
     Starting_bid = forms.IntegerField(label='Starting Bid', required=True)
-    Image = forms.URLField(label='Image', max_length=100, required=False)
+    Image = forms.ImageField(required=False)
     Category = forms.ChoiceField(
         label='Category', required=False,
         choices=category_choices

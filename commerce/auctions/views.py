@@ -9,7 +9,8 @@ from .models import *
 
 def index(request):
     return render(request, "auctions/index.html", {
-        "listings": listings.objects.all()
+        "listings": listings.objects.all(),
+        "today": datetime.datetime.now()
     })
 
 
@@ -70,11 +71,13 @@ def register(request):
 def newlisting(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        print(request)
+
         # create a form instance and populate it with data from the request:
-        form = NewList(request.POST)
+        form = NewList(request.POST, request.FILES)
+        files = request.FILES
         # check whether it's valid:
         if form.is_valid():
+            print('SUCCESS AHHH')
             # process the data in form.cleaned_data as required
             # need to pull the user_id of seller
             item = listings(
@@ -84,6 +87,7 @@ def newlisting(request):
                 Image=form.cleaned_data['Image'],
                 Category=form.cleaned_data['Category'],
                 Duration = datetime.timedelta(days=10),
+
                 Seller = request.user
             )
 

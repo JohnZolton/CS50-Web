@@ -1,15 +1,47 @@
 {% extends "auctions/layout.html" %}
 
-{% block body %}
+<div class="center">
+    {% block body %}
     <h2>Active Listings</h2>
-
     {% for item in listings %}
-        {{ item.Title }}
-        {{ item.Description }}
-        {{ item.Starting_bid }}
-        {{ item.Image }}
-        {{ item.Category }}
-        {{ item.Duration}}
-        {{ item.Seller }}
+        
+
+        <table class="center">
+            <tr>
+                {% if item.Image %}
+                <td style="width:300px">
+                    <img class='image' src="{{item.Image.url}}" alt="Item Image">
+                </td>
+                {% else %}
+                <td style="width:300px"></td>
+                {% endif %}
+                <td>
+                    <table>
+                        <h3>{{ item.Title }}</h3>
+                        <tr>
+                            <td>
+                                {{ item.Description }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Starting Bid: {{ item.Starting_bid }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Seller: {{ item.Seller }}
+                            </td>                     
+                        </tr>
+
+                    </table>
+                    
+
+                </td>
+            </tr>
+        </table>
+
+
     {% endfor %}
-{% endblock %}
+    {% endblock %}
+</div>
