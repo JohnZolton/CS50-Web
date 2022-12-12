@@ -7,6 +7,7 @@ from .forms import *
 import datetime
 from .models import *
 from django.db.models import Max
+from django.urls import resolve
 
 def index(request):
     return render(request, "auctions/index.html", {
@@ -117,7 +118,7 @@ def listing(request, item):
 
     if request.method=='GET':
         item_id = request.GET.get('item')
-        user_id = request.user.id
+        user_id = request.user
     else:
         item_id = int(request.POST['item_id'])
         user_id = request.user
@@ -133,7 +134,7 @@ def listing(request, item):
     
     item = listings.objects.get(id=item_id)
     is_watched = watchlist.objects.filter(user=user_id, items=item)
-    is_bidder = item.Seller == user_id
+    is_seller = item.Seller == user_id
     is_winner = item.Winner == user_id
 
     if request.method=='POST':
@@ -142,7 +143,7 @@ def listing(request, item):
             item_id = int(request.POST['item_id'])
             item = listings.objects.get(id=item_id)
             user_id = request.user
-            
+        
             if form.is_valid() and form.cleaned_data['txt']:
                 text = comments(
                     onitem=item,
@@ -152,6 +153,8 @@ def listing(request, item):
                 )
                 text.save()
                 form = CommentForm()
+                current_url = request.path
+                return HttpResponseRedirect(current_url + f'?item={item_id}')
             
         elif request.POST.get('formtype') == 'watch':
             item_id = request.POST['item_id']
@@ -211,7 +214,7 @@ def listing(request, item):
         'form': form,
         'comments': item_comments,
         'is_watched':is_watched,
-        'is_bidder': is_bidder,
+        'is_bidder': is_seller,
         "is_winner": is_winner})
 
 def category(request):

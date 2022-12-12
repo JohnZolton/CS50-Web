@@ -2,7 +2,7 @@
 
 
 {% block body%}
-<div class="grid-container" style="text-align: center;">
+<div class="flex-container" style="text-align: center;">
 
     <div style="width:300px" class="grid-item">
         {% if item.Image %}
@@ -11,7 +11,7 @@
         <td style="width:300px"></td>
         {% endif %}
     </div>
-    <div class="itemblock">
+    <div class="flex-container" style="flex-direction: column;justify-content:flex-start;align-items:flex-start;">
         <h1 class="grid-item"> {{item.Title}} </h1>
         {% if item.Active %}
         <div class="grid-item">Time left: {{ timeleft }} (HH:MM:SS)</div>
@@ -22,7 +22,7 @@
 
         {% endif %}
         <div class="grid-item">Sold by: {{item.Seller}}</div>
-        <div class="grid-item">{{item.Description}}</div>
+        <div class="grid-item" style="max-width: 400px;">{{item.Description}}</div>
 
         {% if user.is_authenticated %}
             {% if item.Active %}
@@ -53,7 +53,7 @@
                 <button class="watchlist">Add to Watchlist</button>
             </form>
             {% endif %}
-            {% if is_bidder and item.Active %}
+            {% if is_seller and item.Active %}
             <form action="listing" method="post" class="grid-item">
                 {% csrf_token %}
                 <input type="hidden" value="{{item.id}}" name="item_id">
@@ -63,12 +63,11 @@
             </form>
             {% endif %}
         {% endif %}
-        {% if item.Active %}
-        {% else %}
+        
             {% if is_winner %}
             <div class="grid-item" style="font-weight: bold;">Congratulations, You have won!</div>
             {% endif %}
-        {% endif %}
+        
     </div>
 </div>
 <div class="listcenter">
