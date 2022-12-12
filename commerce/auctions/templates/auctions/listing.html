@@ -1,0 +1,107 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body%}
+<div class="grid-container" style="text-align: center;">
+
+    <div style="width:300px" class="grid-item">
+        {% if item.Image %}
+        <img class='image' src="{{item.Image.url}}" alt="Item Image">
+        {% else %}
+        <td style="width:300px"></td>
+        {% endif %}
+    </div>
+    <div class="itemblock">
+        <h1 class="grid-item"> {{item.Title}} </h1>
+        {% if item.Active %}
+        <div class="grid-item">Time left: {{ timeleft }} (HH:MM:SS)</div>
+        <div class="grid-item">Current Price: ${{item.Starting_bid|floatformat:2}}</div>
+        {% else %}
+        <div class="grid-item">Bidding is closed.</div>
+        <div class="grid-item">Final Price: ${{item.Starting_bid|floatformat:2}}</div>
+
+        {% endif %}
+        <div class="grid-item">Sold by: {{item.Seller}}</div>
+        <div class="grid-item">{{item.Description}}</div>
+
+        {% if user.is_authenticated %}
+            {% if item.Active %}
+            <form action="listing" method="post" class="grid-item">
+                {% csrf_token %}
+                <input type="hidden" value="{{item.id}}" name="item_id">
+                <input type="hidden" value="{{user.id}}" name="user_id">
+                <input type="hidden" value="{{item.Starting_bid}}" name="min_bid">
+                <input type="number" step = '.01' placeholder="{{item.Starting_bid}}" name="qty">
+                <input type="hidden" value="bid" name="formtype">
+                <input type="submit" value="Bid">
+            </form>
+            {% endif %}
+            {% if is_watched %}
+            <form action="listing" method="post" class="grid-item">
+                {% csrf_token %}
+                <input type="hidden" value="{{item.id}}" name="item_id">
+                <input type="hidden" value="{{user.id}}" name="user_id">
+                <input type="hidden" value="remove" name="formtype">
+                <button class="watchlist">Remove from Watchlist</button>
+            </form>         
+            {% else %}
+            <form action="listing" method="post" class="grid-item">
+                {% csrf_token %}
+                <input type="hidden" value="{{item.id}}" name="item_id">
+                <input type="hidden" value="{{user.id}}" name="user_id">
+                <input type="hidden" value="watch" name="formtype">
+                <button class="watchlist">Add to Watchlist</button>
+            </form>
+            {% endif %}
+            {% if is_bidder and item.Active %}
+            <form action="listing" method="post" class="grid-item">
+                {% csrf_token %}
+                <input type="hidden" value="{{item.id}}" name="item_id">
+                <input type="hidden" value="{{user.id}}" name="user_id">
+                <input type="hidden" value="closebidding" name="formtype">
+                <button class="watchlist">Close Bidding</button>
+            </form>
+            {% endif %}
+        {% endif %}
+        {% if item.Active %}
+        {% else %}
+            {% if is_winner %}
+            <div class="grid-item" style="font-weight: bold;">Congratulations, You have won!</div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+<div class="listcenter">
+    <div class="comment">
+        {% if user.is_authenticated %}
+        <form action="listing" method="post" class="textarea">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <input type="hidden" value="{{item.id}}" name="item_id">
+            <input type="hidden" value="comment" name="formtype">
+            <input type="submit" value="Post">
+        </form>
+        {% else %}
+        Sign in to comment.
+        {% endif %}
+    </div>
+    {% for comment in comments %}
+    <div class="commentblock">
+        <div style="text-align:right">
+            {{comment.user}}:
+        </div>
+        <div>
+            {{comment.text}}
+        </div>
+        <div style="text-align: left;">
+            on {{comment.commenttime}}
+        </div>
+        
+        
+        
+        
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -18,3 +18,9 @@ class NewList(forms.Form):
         label='Category', required=False,
         choices=category_choices
     )
+
+class CommentForm(forms.Form):
+    txt = forms.CharField(label='Comment', max_length=150, required=False)
+
+
+    
