@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h1>{{ category }}</h1>
+
+{% if listings %}
+    {% for item in listings %}
+
+    <form action="/listing?item={{item.id}}" method="get">
+        <input type="hidden" id='item' name='item' value="{{item.id}}">
+        <button type="submit" class="center">
+            <table class="center">
+                <tr>
+                    {% if item.Image %}
+                    <td style="width:300px">
+                        <img class='image' src="{{item.Image.url}}" alt="Item Image">
+                    </td>
+                    {% else %}
+                    <td style="width:300px"></td>
+                    {% endif %}
+                    <td>
+                        <table style='vertical-align:top; text-align: left;'>
+                            <h3 style="text-align:left; font-weight: 550; vertical-align: top;">{{ item.Title }}</h3>
+                            <tr>
+                                <td>
+                                    <strong>Price:</strong>  ${{ item.Starting_bid }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 75px;">
+                                    {{ item.Description }}
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    Seller: {{ item.Seller }}
+                                </td>                     
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </button>    
+    </form>
+    {% endfor %}
+{% else %}
+<div>None</div>
+{% endif %}
+{% endblock %}

@@ -214,3 +214,31 @@ def listing(request, item):
         'is_bidder': is_bidder,
         "is_winner": is_winner})
 
+def category(request):
+    category_choices = [
+    ('1', 'Fashion'),
+    ('2', 'Toys'),
+    ('3', 'Electronics'),
+    ('4', 'Home'),
+    ('5', 'Hardware')
+]
+    categories = []
+    for _, x in category_choices:
+        categories.append(x)
+
+    return render(request, 'auctions/categories.html', {'categories': categories})
+
+def getcategory(request, category):
+    category_choices = [
+    ('1', 'Fashion'),
+    ('2', 'Toys'),
+    ('3', 'Electronics'),
+    ('4', 'Home'),
+    ('5', 'Hardware')
+]
+    for x, y in category_choices:
+        if y == category:
+            options = listings.objects.filter(Category=x)
+
+    return render(request, 'auctions/speccategory.html', {'category': category,
+    'listings': options})

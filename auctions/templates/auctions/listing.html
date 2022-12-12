@@ -24,7 +24,7 @@
         <div class="grid-item">Sold by: {{item.Seller}}</div>
         <div class="grid-item">{{item.Description}}</div>
 
-        {% if user.is_authenticated and item.Active %}
+        {% if user.is_authenticated %}
             {% if item.Active %}
             <form action="listing" method="post" class="grid-item">
                 {% csrf_token %}
@@ -53,7 +53,7 @@
                 <button class="watchlist">Add to Watchlist</button>
             </form>
             {% endif %}
-            {% if is_bidder %}
+            {% if is_bidder and item.Active %}
             <form action="listing" method="post" class="grid-item">
                 {% csrf_token %}
                 <input type="hidden" value="{{item.id}}" name="item_id">
@@ -63,8 +63,11 @@
             </form>
             {% endif %}
         {% endif %}
-        {% if is_winner %}
-        <div class="grid-item" style="font-weight: bold;">Congratulations, You have won!</div>
+        {% if item.Active %}
+        {% else %}
+            {% if is_winner %}
+            <div class="grid-item" style="font-weight: bold;">Congratulations, You have won!</div>
+            {% endif %}
         {% endif %}
     </div>
 </div>
