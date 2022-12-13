@@ -128,7 +128,7 @@ def listing(request, item):
     form = CommentForm()
     
     if comments.objects.filter(onitem=item_id):
-        item_comments = comments.objects.filter(onitem=item_id)
+        item_comments = comments.objects.filter(onitem=item_id).order_by('-commenttime')
     else: item_comments = None
 
     
@@ -143,7 +143,7 @@ def listing(request, item):
             item_id = int(request.POST['item_id'])
             item = listings.objects.get(id=item_id)
             user_id = request.user
-        
+
             if form.is_valid() and form.cleaned_data['txt']:
                 text = comments(
                     onitem=item,

@@ -14,15 +14,15 @@
     <div class="flex-container" style="flex-direction: column;justify-content:flex-start;align-items:flex-start;">
         <h1 class="grid-item"> {{item.Title}} </h1>
         {% if item.Active %}
-        <div class="grid-item">Time left: {{ timeleft }} (HH:MM:SS)</div>
-        <div class="grid-item">Current Price: ${{item.Starting_bid|floatformat:2}}</div>
+        <div class="grid-item"><strong>Time left: </strong>{{ timeleft }} (HH:MM:SS)</div>
+        <div class="grid-item"><strong>Current Price: </strong>${{item.Starting_bid|floatformat:2}}</div>
         {% else %}
         <div class="grid-item">Bidding is closed.</div>
-        <div class="grid-item">Final Price: ${{item.Starting_bid|floatformat:2}}</div>
+        <div class="grid-item"><strong>Final Price: </strong>${{item.Starting_bid|floatformat:2}}</div>
 
         {% endif %}
-        <div class="grid-item">Sold by: {{item.Seller}}</div>
-        <div class="grid-item" style="max-width: 400px;">{{item.Description}}</div>
+        <div class="grid-item"><strong>Sold by: </strong>{{item.Seller}}</div>
+        <div class="grid-item" style="max-width: 400px;padding-bottom: 5px"><strong>Description: </strong>{{item.Description}}</div>
 
         {% if user.is_authenticated %}
             {% if item.Active %}
@@ -86,19 +86,13 @@
     </div>
     {% for comment in comments %}
     <div class="commentblock">
-        <div style="text-align:right">
-            {{comment.user}}:
+        <div class="comment-user">
+            {{comment.user}} • <small>{{comment.commenttime}}</small>
         </div>
-        <div>
+
+        <div class="comment-body">
             {{comment.text}}
         </div>
-        <div style="text-align: left;">
-            on {{comment.commenttime}}
-        </div>
-        
-        
-        
-        
     </div>
     {% endfor %}
 </div>

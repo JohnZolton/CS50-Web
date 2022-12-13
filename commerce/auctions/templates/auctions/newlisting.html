@@ -1,9 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div>
+<div class="newlisting">
     {% if user.is_authenticated %}
-    <h2>New Listing</h2>
+    <h2 style="margin-bottom: 20px;">New Listing</h2>
 
     <form action="newlisting" method="post" enctype="multipart/form-data">
         {% csrf_token %}

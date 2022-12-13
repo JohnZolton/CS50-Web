@@ -6,42 +6,53 @@
         <title class="center">{% block title %}Auctions{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
         <h1>Auctions</h1>
-        <div>
+        <div style="margin-bottom: 5px;">
             {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
             {% else %}
                 Not signed in.
             {% endif %}
         </div>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'category' %}">Categories</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'newlisting' %}">New Listing</a>
-            </li>
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'yourlist' %}">Watchlist</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-            {% endif %}
-        </ul>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target=".navbar-menu" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse navbar-menu" id="navbar1">
+                <ul class="nav navbar-nav">
+                
+                    <li class="nav-item">
+                        <a class="nav-link navbar-dark" href="{% url 'index' %}">Active Listings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category' %}">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'newlisting' %}">New Listing</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'yourlist' %}">Watchlist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            
+        </nav>
+
         <hr>
 
             {% block body %}

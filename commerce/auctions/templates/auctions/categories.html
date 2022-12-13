@@ -2,14 +2,14 @@
 
 {% block body %}
 
-<div>
+<div class="flex-container">
     {% for category in categories %}
-    <li>
-        <a href="{% url 'getcategory' category %}">
-            {{ category }}
+    <div >
+        <form action ="{% url 'getcategory' category %}" >
+            <button class="link" type="submit"> {{category}}</button>
+        </form>
+    </div>
 
-        </a>
-    </li>
     {% endfor %}
 </div>
 
