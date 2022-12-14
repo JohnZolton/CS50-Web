@@ -118,7 +118,7 @@ def listing(request, item):
 
     if request.method=='GET':
         item_id = request.GET.get('item')
-        user_id = request.user
+        user_id = request.user.id
     else:
         item_id = int(request.POST['item_id'])
         user_id = request.user
