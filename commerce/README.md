@@ -7,6 +7,7 @@ alt="IMAGE ALT TEXT HERE" width="560" height="315" border="10"  /></a>
   <a href="http://www.youtube.com/watch?feature=player_embedded&v=ux4rXEOuZLI
 " target="_blank">(Youtube Link)</a>
 </p>
+
 **Specification**:
 
 - **Models**: Your application should have at least three models in addition to the User model: one for auction listings, one for bids, and one for comments made on auction listings. It’s up to you to decide what fields each model should have, and what the types of those fields should be. You may have additional models if you would like.
