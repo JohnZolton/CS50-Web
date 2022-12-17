@@ -1,0 +1,41 @@
+.tweetbox {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    max-width: 400px;
+    text-align: center;
+}
+
+#newtweet {
+    width:100%;
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    resize: none;
+    overflow:auto;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.137);
+}
+#newtweet:focus {
+    background-color: rgba(255, 255, 255, 0.137);
+}
+
+#tweet-btn-box {
+    text-align: right;
+    margin-top: 5px;
+}
+
+#tweet-btn {
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: rgb(80, 105, 247);
+    color: white;
+    border: 1px solid rgb(71, 71, 71);
+}
+
+#tweet-btn:hover {
+    transform: scale(1.1);
+    border: 2px solid black;
+}

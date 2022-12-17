@@ -1,0 +1,17 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="tweetbox">
+        <form>
+            <div>
+                <span>
+                    <textarea id="newtweet" maxlength="140" rows = '3' placeholder="Tweet" required="True"></textarea>
+                </span>
+           </div>
+            <div id="tweet-btn-box">
+                <button id="tweet-btn">Tweet</button>
+            </div>
+            
+        </form>
+    </div>
+{% endblock %}
