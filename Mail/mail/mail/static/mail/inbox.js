@@ -41,7 +41,7 @@ function sendmail() {
         // Print result
         console.log(result);
     })
-    load_mailbox('sent')
+    .then(()=>load_mailbox('sent'));
     return false;
   }
 ;
@@ -60,12 +60,15 @@ function getmail(mailbox) {
 
 function showmail(item) {
   const element = document.createElement('div');
-  element.innerHTML = `<strong>${item.subject}</strong>, from ${item.sender}, to ${item.recipients} at ${item.timestamp}`;
+  element.innerHTML = `<div style='font-weight:bold; margin-left:10px;'>${item.sender}</div> <div style='text-align:left; margin-left:20px;'>${item.subject}</div>  <div style='text-align:right; opacity:70%; margin-right: 10px'>${item.timestamp}</div>`;
   if (item.read === true){
-    element.style.background = 'grey'
+    element.style.background = 'rgb(180, 180, 180)'
   };
-  element.style.border = '2px solid black'
-  element.style.margin = '10px'
+  if (item.sender === document.querySelector('#cur-user').innerHTML){
+    element.style.background = 'white'
+  };
+  element.id = 'mailbox'
+  console.log(document.querySelector('#cur-user').innerHTML);
   element.addEventListener('click', function() {
     getthatmail(item.id);
     console.log(item.id);
@@ -85,10 +88,18 @@ function getthatmail(item) {
     document.querySelector('#compose-view').style.display = 'none';
     document.querySelector('#spec-email').style.display = 'block';
     document.querySelector('#spec-email').value = item
-    document.querySelector('#heading').innerHTML = email.subject;
-    document.querySelector('#body').innerHTML = email.body;
-    document.querySelector('#sender').innerHTML = email.sender;
-    document.querySelector('#timestamp').innerHTML = email.timestamp;
+    document.querySelector('#heading').innerHTML = `<strong>Subject: </strong>${email.subject}`;
+    document.querySelector('#body').innerHTML = `${email.body}`;
+    document.querySelector('#reciever').innerHTML = `<strong>From: </strong>${email.sender}`;
+    document.querySelector('#sender').innerHTML = `<strong>To: </strong>${email.recipients}`;
+    document.querySelector('#timestamp').innerHTML = `<strong>Timestamp: </strong>${email.timestamp}`;
+    document.querySelector('#archive-btn').addEventListener('click', send_archive);
+    document.querySelector('#reply-btn').addEventListener('click', () => reply_mail(email));
+    if (email.archived===false){
+      document.querySelector('#archive-btn').innerHTML = 'Archive'
+    } else {
+      document.querySelector('#archive-btn').innerHTML = 'Remove from Archive'
+    };
   })
   fetch(`/emails/${item}`, {
     method: 'PUT',
@@ -96,21 +107,31 @@ function getthatmail(item) {
         read: true
     })
   });
-  document.querySelector('#archive-btn').addEventListener('click', send_archive());
+};
+
+function reply_mail(email) {
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'block';
+  document.querySelector('#spec-email').style.display = 'none';
+  console.log(email)
+  document.querySelector('#compose-recipients').value = email.sender;
+  document.querySelector('#compose-subject').value = email.subject;
+  document.querySelector('#compose-body').value = '';  
 };
 
 function send_archive() {
-  item = document.querySelector('#spec-email').value;
+  const item = document.querySelector('#spec-email').value;
   fetch(`/emails/${item}`)
   .then(response => response.json())
   .then(email => {
-    if (email.archived === true){
+    if (email.archived === false){
       fetch(`/emails/${email.id}`, {
         method: 'PUT',
         body: JSON.stringify({
             archived: true
         })
       });
+      document.querySelector('#archive-btn').innerHTML = 'Remove from Archive'
       alert(`Added to Archived`)
     } else {
       fetch(`/emails/${email.id}`, {
@@ -119,11 +140,12 @@ function send_archive() {
             archived: false
         })
       });
+      document.querySelector('#archive-btn').innerHTML = 'Archive'
       alert(`Removed from Archived`)
-  };
-
-  
-})};
+  };  
+})
+  load_mailbox('inbox')
+};
   
 function load_mailbox(mailbox) {
   

@@ -1,3 +1,37 @@
 textarea {
     min-height: 400px;
 }
+
+#mailbox {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px;
+    display: grid;
+    grid-template-columns: max-content auto auto;
+    transition: all .2s ease-in-out;
+}
+#mailbox:hover {
+    transform: scale(1.1);
+}
+
+.mail-info {
+    border-top: 2px solid rgba(105, 102, 102, 0.534);
+    border-bottom: 2px solid rgba(105, 102, 102, 0.534);
+    
+    margin: 10px;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: auto auto auto auto auto;
+}
+
+.mailbody {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+#archive-btn {
+    margin-left: 20px;
+    margin-top: 10px;
+}

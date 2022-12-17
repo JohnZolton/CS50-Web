@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-    <h2>{{ request.user.email }}</h2>
+    <h2 id="cur-user">{{ request.user.email }}</h2>
 
     <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
     <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
@@ -14,11 +14,16 @@
     <div id="emails-view">
     </div>
     <div id="spec-email" value=''>
-        <h3 id="heading"></h3>
-        <div id="body"></div>
-        <div id='sender'></div>
-        <div id="timestamp"></div>
-        <button id="archive">Archive</button>
+        <div class="mail-info">
+            <div id="heading"></div>
+            <div id='sender'></div>
+            <div id='reciever'></div>
+            <div id="timestamp"></div>
+            <button class="btn btn-sm btn-outline-primary"  id="reply-btn" style="margin-top: 5px; width:max-content">Reply</button>
+        </div>
+
+        <div id="body" class="mailbody"></div>
+        <button class="btn btn-sm btn-outline-primary" id="archive-btn">Archive</button>
     </div>
 
     <div id="compose-view">
@@ -34,7 +39,7 @@
                 <input class="form-control" id="compose-subject" placeholder="Subject">
             </div>
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary" id="send-button" />
+            <input type="submit" class="btn btn-primary" id="send-button" value="Send" style="margin-top:10px;"/>
         </form>
     </div>
 {% endblock %}
