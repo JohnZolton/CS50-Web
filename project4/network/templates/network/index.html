@@ -18,9 +18,9 @@
     </div>
     {% endif %}
     {% for tweet in tweets %}
-    <div class="displaybox" style="border: 2px solid black;">
+    <div class="displaybox">
         <div class="display-author">
-            {{tweet.author}}
+            <a href = '{% url "viewprofile" tweet.author %}' style="color:black;">u/{{tweet.author}}</a>
         </div>
         <div class="display-date">
             {{tweet.time}}

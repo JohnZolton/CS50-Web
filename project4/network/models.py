@@ -7,10 +7,9 @@ class User(AbstractUser):
 
 class follows(models.Model):
     id = models.AutoField(primary_key=True)
-    account = models.ForeignKey(User, on_delete=models.CASCADE)
-    followers = models.ManyToManyField(User, related_name='following')
-    following = models.ManyToManyField(User, related_name='followers')
-
+    account = models.OneToOneField(User, on_delete=models.CASCADE)
+    followers = models.ManyToManyField(User, default=None, related_name='follower')
+    following = models.ManyToManyField(User, default=None, related_name='isfollowing')
 
 class tweet(models.Model):
     id = models.AutoField(primary_key=True)

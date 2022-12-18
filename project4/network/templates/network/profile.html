@@ -1,0 +1,58 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    
+    <div class="profilebox">
+        <div class="profilename" >
+            u/{{user_profile.username}}
+        </div>
+        <div class="followers">
+            {{follower_count}} Followers
+        </div>
+        <div class="following">
+            {{following_count}} Following
+        </div>
+        <div>
+            {% if follows_you %}
+            Follows You
+            {% endif %}
+        </div>
+        <div class="follow-btn-container">
+            {% if user.is_authenticated and user != user_profile %}
+            {% if is_following %}
+
+            <form action = "{% url 'viewprofile' user_profile %}" method="Post">
+                {% csrf_token %}
+                <input type="hidden" value = "unfollow" name = "formtype">
+                <button type="Submit" class="follow-btn">Unfollow</button>
+            </form> 
+            {% else %}
+            <form action = "{% url 'viewprofile' user_profile %}" method="Post">
+                {% csrf_token %}
+                <input type="hidden" value = "follow" name = "formtype">
+                <button type="Submit" class="follow-btn">Follow</button>
+            </form>
+            {% endif %}
+            {% endif %}
+        </div>
+
+    </div>
+        
+    
+    {% for tweet in tweets %}
+    <div class="displaybox">
+        <div class="display-author">
+            <a href = '' style="color:black;">u/{{tweet.author}}</a>
+        </div>
+        <div class="display-date">
+            {{tweet.time}}
+        </div>
+        <div class="display-text">
+            {{tweet.tweet}}
+        </div>
+        <div class="display-likes">
+            {{tweet.likes}} Likes
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

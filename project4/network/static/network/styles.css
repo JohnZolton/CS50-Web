@@ -50,12 +50,19 @@
     padding: 5px;
     border-radius: 10px;
     background-color: rgba(128, 128, 128, 0.137);
+    border: 1px solid black;
+}
+
+.displaybox:hover{
+    background: rgba(209, 208, 208, 0.137);
 }
 
 .display-author{
     grid-column: 1;
     margin-left: 5px;
+
 }
+
 .display-date{
     grid-column: 2;
     text-align: right;
@@ -69,4 +76,54 @@
 .display-likes{
     grid-column: 2;
     text-align: right;
+}
+
+.profilebox {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+
+    text-align: left;
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: 3;
+    grid-template-rows: 2;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.137);
+    border: 1px solid black;
+}
+
+.profilename{
+    grid-column: 1;
+    grid-row: 1;
+    padding-left: 10px;
+}
+.following {
+    grid-row: 2;
+    grid-column: 1;
+}
+.followers {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.follow-btn-container {
+    grid-row:2; 
+    grid-column:3; 
+    justify-self: right;
+}
+
+.follow-btn {
+    justify-self: right;
+    grid-row: 2;
+    grid-column: 3;
+    width:fit-content;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.137);
+}
+.follow-btn:hover {
+    background-color: rgba(255, 255, 255, 0.137);
 }
