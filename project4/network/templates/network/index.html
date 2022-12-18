@@ -1,17 +1,36 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+    {% if user.is_authenticated %}
     <div class="tweetbox">
-        <form>
+        <form action = 'newtweet', method="Post" id="tweetform">
+            {% csrf_token %}
             <div>
                 <span>
-                    <textarea id="newtweet" maxlength="140" rows = '3' placeholder="Tweet" required="True"></textarea>
+                    <textarea id="newtweet" name="body" maxlength="140" rows = '3' placeholder="Tweet" required="True"></textarea>
                 </span>
            </div>
             <div id="tweet-btn-box">
-                <button id="tweet-btn">Tweet</button>
+                <button id="tweet-btn" type="submit">Tweet</button>
             </div>
             
         </form>
     </div>
+    {% endif %}
+    {% for tweet in tweets %}
+    <div class="displaybox" style="border: 2px solid black;">
+        <div class="display-author">
+            {{tweet.author}}
+        </div>
+        <div class="display-date">
+            {{tweet.time}}
+        </div>
+        <div class="display-text">
+            {{tweet.tweet}}
+        </div>
+        <div class="display-likes">
+            {{tweet.likes}} Likes
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}

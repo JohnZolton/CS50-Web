@@ -3,12 +3,17 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .models import *
+import datetime
 
 from .models import User
 
 
 def index(request):
-    return render(request, "network/index.html")
+    tweets = tweet.objects.all()
+    return render(request, "network/index.html", {
+        'tweets': tweets
+    })
 
 
 def login_view(request):
@@ -61,3 +66,18 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+def newtweet(request):
+    if request.method=='POST':
+        text = request.POST['body']
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+        newtweet = tweet(
+            author = user,
+            tweet = text,
+            time = datetime.datetime.now(),
+            likes = 0
+        )
+        newtweet.save()
+        #return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("index"))
