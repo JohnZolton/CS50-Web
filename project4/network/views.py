@@ -134,8 +134,9 @@ def following(request):
     
     user = User.objects.get(id=request.user.id)
 
-    following = follows.objects.get(account=user)
-    accs_followed = following.following.all()
+    users_following, t = follows.objects.get_or_create(account=user)
+
+    accs_followed = users_following.following.all()
     accounts = User.objects.filter(id__in=accs_followed)
     tweets = tweet.objects.filter(author__in=accounts)
 
