@@ -18,6 +18,7 @@
 }
 #newtweet:focus {
     background-color: rgba(255, 255, 255, 0.137);
+
 }
 
 #tweet-btn-box {
@@ -55,6 +56,7 @@
 
 .displaybox:hover{
     background: rgba(209, 208, 208, 0.137);
+
 }
 
 .display-author{
@@ -76,6 +78,23 @@
 .display-likes{
     grid-column: 2;
     text-align: right;
+}
+
+
+.like-btn {
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: rgba(128, 128, 128, 0.137);
+    color: black;
+    border: 1px solid rgb(71, 71, 71);
+}
+
+.like-btn:hover {
+    background-color: rgba(255, 255, 255, 0.137);
+}
+.like-btn:active {
+    background-color: rgba(128, 128, 128, 0.137);
 }
 
 .profilebox {

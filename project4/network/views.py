@@ -108,6 +108,7 @@ def viewprofile(request, username):
             print('follow form sent')
             user_follow_info.following.add(profile)
             profile_info.followers.add(cur_user)
+            print(profile_info.followers.all())
             is_following = True
             
         if request.POST.get('formtype') == 'unfollow':
@@ -127,3 +128,17 @@ def viewprofile(request, username):
         'follows_you': follows_you
     })
 
+def following(request):
+    if not request.user.id:
+        return HttpResponseRedirect(reverse('login'))
+    
+    user = User.objects.get(id=request.user.id)
+
+    following = follows.objects.get(account=user)
+    accs_followed = following.following.all()
+    accounts = User.objects.filter(id__in=accs_followed)
+    tweets = tweet.objects.filter(author__in=accounts)
+
+    return render(request, "network/following.html", {
+        'tweets':tweets,
+    })
