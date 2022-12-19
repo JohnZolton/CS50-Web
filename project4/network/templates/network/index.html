@@ -1,6 +1,7 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+
     {% if user.is_authenticated %}
     <div class="tweetbox">
         <form action = '{% url "newtweet"  %}', method="Post" id="tweetform">
@@ -30,7 +31,7 @@
             {{tweet.tweet}}
         </div>
         <div class="display-likes">
-            <button class="like-btn" id='like-btn' type="submit">Like</button>
+            <button class="like-btn" id='like-btn' type="submit" data-id="{{tweet.id}}">Like</button>
             {{tweet.likes}} Likes
         </div>
 

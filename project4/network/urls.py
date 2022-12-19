@@ -11,4 +11,6 @@ urlpatterns = [
     path("newtweet", views.newtweet, name="newtweet"),
     path("user/<str:username>", views.viewprofile, name="viewprofile"),
     path("following", views.following, name="following"),
+    path("like", views.like, name="like"),
+    
 ]
