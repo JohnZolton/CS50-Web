@@ -2,10 +2,11 @@
 
 {% block body %}
 {% if user.is_authenticated %}
-    {% if user.is_authenticated %}
+    
     <div class="tweetbox">
-        <form action = 'newtweet', method="Post" id="tweetform">
+        <form action = '{% url "newtweet" %}', method="Post" id="tweetform">
             {% csrf_token %}
+            <input type="hidden" name="page" value = {{request.path}}>
             <div>
                 <span>
                     <textarea id="newtweet" name="body" maxlength="140" rows = '3' placeholder="Tweet" required="True"></textarea>
@@ -17,7 +18,7 @@
             
         </form>
     </div>
-    {% endif %}
+
     {% for tweet in tweets %}
     <div class="displaybox">
         <div class="display-author">

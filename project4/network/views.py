@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, get_script_prefix
 from .models import *
 import datetime
 
@@ -68,6 +68,7 @@ def register(request):
         return render(request, "network/register.html")
 
 def newtweet(request):
+    
     if request.method=='POST':
         text = request.POST['body']
         user_id = request.user.id
@@ -80,7 +81,7 @@ def newtweet(request):
         )
         newtweet.save()
         #return HttpResponseRedirect(reverse("index"))
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(request.POST['page'])
 
 def viewprofile(request, username):
     cur_user = request.user
