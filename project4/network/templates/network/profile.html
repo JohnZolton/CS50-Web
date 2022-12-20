@@ -51,8 +51,14 @@
             {{tweet.tweet}}
         </div>
         <div class="display-likes">
-            <button class="like-btn" id='like-btn' type="submit" data-id="{{tweet.id}}">Like</button>
-            {{tweet.likes}} Likes
+            <button class="like-btn" id='like-btn-{{tweet.id}}' type="submit" data-id="{{tweet.id}}" data-likes = {{tweet.likes}}>Like</button>
+            <div class= 'likecount' id="container-{{tweet.id}}">
+                {% if tweet.likes == 1 %}
+                {{tweet.likes}} Like
+                {% else %}
+                {{tweet.likes}} Likes
+                {% endif %}
+            </div>
         </div>
     </div>
     {% endfor %}

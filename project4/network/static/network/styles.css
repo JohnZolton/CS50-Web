@@ -78,18 +78,32 @@
 .display-likes{
     grid-column: 2;
     text-align: right;
+    display: grid;
+    grid-template-columns: auto max-content;
 }
 
 
 .like-btn {
     border-radius: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
     background-color: rgba(128, 128, 128, 0.137);
     color: black;
     border: 1px solid rgb(71, 71, 71);
+    grid-column: 1;
+    justify-self: right;
+    text-align: right;
+    padding: 3px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
+.likecount{
+    grid-column: 2;
+    width: fit-content;
+    justify-self: right;
+    padding-left:8px;
+    padding: 3px;
+
+}
 .like-btn:hover {
     background-color: rgba(255, 255, 255, 0.137);
 }

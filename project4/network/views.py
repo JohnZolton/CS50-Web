@@ -152,11 +152,13 @@ def like(request):
     if request.method == 'POST':
         jsonData = json.loads(request.body)
         tweet_id = jsonData.get('tweet_id')
-        
+
         cur_tweet = tweet.objects.get(id=tweet_id)
-        cur_tweet.likes += 1
-        print(cur_tweet.likes)
+        user = User.objects.get(id=request.user.id)
+        cur_tweet.likers.add(user)
+        cur_tweet.likes = cur_tweet.likers.all().count()
         cur_tweet.save()
 
-        response_data = {'success':1}
+        response_data = {'likes': cur_tweet.likes}
+
         return HttpResponse(json.dumps(response_data), content_type="application/json")
