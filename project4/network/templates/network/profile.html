@@ -47,9 +47,7 @@
         <div class="display-date">
             {{tweet.time}}
         </div>
-        <div class="display-text">
-            {{tweet.tweet}}
-        </div>
+        <div class="display-text">{{tweet.tweet}}</div>
         <div class="display-likes">
             {% if tweet.author == user %}
             <button class="edit-btn" id='edit-btn-{{tweet.id}}' type="submit" data-id="{{tweet.id}}">Edit</button>
