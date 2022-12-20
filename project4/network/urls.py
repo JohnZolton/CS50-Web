@@ -9,6 +9,11 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("newtweet", views.newtweet, name="newtweet"),
+    path("user/like", views.like, name="like"),
+    path("user/unlike", views.unlike, name="like"),
     path("user/<str:username>", views.viewprofile, name="viewprofile"),
     path("following", views.following, name="following"),
+    path("like", views.like, name="like"),
+    path("unlike", views.unlike, name="like"),
+    
 ]

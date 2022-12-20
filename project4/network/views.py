@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse, get_script_prefix
 from .models import *
 import datetime
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User
 
@@ -144,3 +146,39 @@ def following(request):
     return render(request, "network/following.html", {
         'tweets':tweets,
     })
+
+@csrf_exempt
+def like(request):
+    if request.method == 'POST':
+        jsonData = json.loads(request.body)
+        tweet_id = jsonData.get('tweet_id')
+
+        cur_tweet = tweet.objects.get(id=tweet_id)
+        user = User.objects.get(id=request.user.id)
+        cur_tweet.likers.add(user)
+        cur_tweet.likes = cur_tweet.likers.all().count()
+        cur_tweet.save()
+
+        response_data = {'likes': cur_tweet.likes}
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+@csrf_exempt
+def unlike(request):
+
+    if request.method == 'POST':
+        jsonData = json.loads(request.body)
+        tweet_id = jsonData.get('tweet_id')
+
+        cur_tweet = tweet.objects.get(id=tweet_id)
+        user = User.objects.get(id=request.user.id)
+        cur_tweet.likers.remove(user)
+        
+        cur_tweet.likes = cur_tweet.likers.all().count()
+
+        print(cur_tweet.likes)
+        cur_tweet.save()
+        response_data = {'likes': cur_tweet.likes}
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json")

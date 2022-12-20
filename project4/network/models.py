@@ -16,6 +16,7 @@ class tweet(models.Model):
     tweet = models.TextField(max_length=140)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
+    likers = models.ManyToManyField(User, default=None, related_name='likers')
     likes = models.IntegerField(default=0)
     
     class Meta:
