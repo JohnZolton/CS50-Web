@@ -2,13 +2,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse, get_script_prefix
+from django.urls import reverse
 from .models import *
 import datetime
 import json
-from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-
+from django.http import JsonResponse
+from django.shortcuts import render
+import time
+from django.core.paginator import Paginator
 
 from .models import User
 
@@ -108,20 +110,7 @@ def viewprofile(request, username):
     if cur_user in user_follow_info.following.all():
         follows_you=True
 
-    if request.method=='POST':
-        if request.POST.get('formtype') == 'follow':
-            print('follow form sent')
-            user_follow_info.following.add(profile)
-            profile_info.followers.add(cur_user)
-            print(profile_info.followers.all())
-            is_following = True
-            
-        if request.POST.get('formtype') == 'unfollow':
-            print('unfollow form sent')
-            user_follow_info.following.remove(profile)
-            profile_info.followers.remove(cur_user)
-            is_following = False
-        follower_count = profile_info.followers.all().count()
+
 
 
     return render(request, "network/profile.html", {
@@ -185,7 +174,7 @@ def unlike(request):
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
-#@csrf_exempt # probs return later
+
 def edit(request):
     if request.method == "POST":
         jsonData = json.loads(request.body)
@@ -198,4 +187,40 @@ def edit(request):
         cur_tweet.save()
 
         response_data = {'tweet_body': tweet_body}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+def follow(request):
+    if request.method == "POST":
+        jsonData = json.loads(request.body)
+        acc_id = jsonData.get('acc_to_follow')
+        cur_user = User.objects.get(id=request.user.id)
+        acc_obj = User.objects.get(username=acc_id)
+        
+        user_follows = follows.objects.get(account=request.user.id)
+        user_follows.following.add(acc_obj)
+        user_follows.save()
+
+        acc_follows = follows.objects.get(account=acc_obj)
+        acc_follows.followers.add(cur_user)
+        acc_follows.save()
+        followers = acc_follows.followers.all().count()
+        response_data = {'followers': followers}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+def unfollow(request):
+    if request.method == "POST":
+        jsonData = json.loads(request.body)
+        acc_id = jsonData.get('acc_to_follow')
+        cur_user = User.objects.get(id=request.user.id)
+        acc_obj = User.objects.get(username=acc_id)
+        
+        user_follows = follows.objects.get(account=request.user.id)
+        user_follows.following.remove(acc_obj)
+        user_follows.save()
+
+        acc_follows = follows.objects.get(account=acc_obj)
+        acc_follows.followers.remove(cur_user)
+        acc_follows.save()
+        followers = acc_follows.followers.all().count()
+        response_data = {'followers': followers}
         return HttpResponse(json.dumps(response_data), content_type="application/json")

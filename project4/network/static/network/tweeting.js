@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   })}
 
             if (this.dataset.type === 'unlike') {
+                console.log(this.dataset.type)
                 fetch('unlike', {
                     method: 'POST',
                     headers:{'X-CSRFToken': csrf},
@@ -83,6 +84,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector(`#${this.id}`).innerText = 'Save';
                 document.querySelector(address).innerHTML=  `<textarea class='editbox' id='text-${this.id}' maxlength="140" rows="4">${tweet_body}</textarea>`;
             }
+
+            if (this.dataset.type === 'unfollow') {
+                fetch('unfollow',{
+                    method:'POST',
+                    headers:{'X-CSRFToken': csrf},
+                    body: JSON.stringify({
+                        acc_to_follow: this.dataset.account
+                    })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log(result)
+                        this.dataset.type='follow'
+                        console.log(this.dataset.type)
+                        document.querySelector(`#${this.id}`).innerHTML = 'Follow'
+                        if (result.followers === 1) {
+                            document.querySelector('#follower_count').innerText = `${result.followers} Follower`
+                        } else {
+                            document.querySelector('#follower_count').innerText = `${result.followers} Followers`
+                        }
+                })}
+
+            if (this.dataset.type === 'follow') {
+                fetch('follow',{
+                    method:'POST',
+                    headers:{'X-CSRFToken': csrf},
+                    body: JSON.stringify({
+                        acc_to_follow: this.dataset.account
+                    })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        this.dataset.type='unfollow';
+                        console.log(this.dataset.type)
+                        console.log(result)
+                        document.querySelector(`#${this.id}`).innerHTML = 'Unfollow'
+                        if (result.followers === 1) {
+                            document.querySelector('#follower_count').innerText = `${result.followers} Follower`
+                        } else {
+                            document.querySelector('#follower_count').innerText = `${result.followers} Followers`
+                        }
+                        
+                })}
         }
     });
  });
@@ -103,3 +147,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return cookieValue;
 }
+
