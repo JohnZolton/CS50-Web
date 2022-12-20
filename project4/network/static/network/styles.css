@@ -76,19 +76,39 @@
     grid-column: 1 / span 2;
 }
 .display-likes{
-    grid-column: 2;
+    grid-column: 1/ span 2;
     text-align: right;
     display: grid;
-    grid-template-columns: auto max-content;
+    grid-template-columns: auto auto max-content;
 }
 
+.edit-btn {
+    justify-self: left;
+    text-align: left;
+    grid-column: 1;
 
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.137);
+    color: black;
+    border: 1px solid rgb(71, 71, 71);
+
+    padding: 3px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.edit-btn:hover {
+    background-color: rgba(255, 255, 255, 0.137);
+}
+.edit-btn:active {
+    background-color: rgba(128, 128, 128, 0.137);
+}
 .like-btn {
     border-radius: 10px;
     background-color: rgba(128, 128, 128, 0.137);
     color: black;
     border: 1px solid rgb(71, 71, 71);
-    grid-column: 1;
+    grid-column: 2;
     justify-self: right;
     text-align: right;
     padding: 3px;
@@ -97,7 +117,7 @@
 }
 
 .likecount{
-    grid-column: 2;
+    grid-column: 3;
     width: fit-content;
     justify-self: right;
     padding-left:8px;
