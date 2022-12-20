@@ -78,8 +78,13 @@
 .display-likes{
     grid-column: 2;
     text-align: right;
+    padding: 5px;
 }
 
+.display-edit {
+    padding: 5px;
+    grid-column: 1;
+}
 
 .like-btn {
     border-radius: 10px;

@@ -29,10 +29,16 @@
         <div class="display-text">
             {{tweet.tweet}}
         </div>
+        {% if tweet.author == user %}
+        <div class="display-edit">
+            <button class="like-btn" id='like-btn' type="submit">Edit</button>
+        </div>
+        {% endif %}
         <div class="display-likes">
             <button class="like-btn" id='like-btn' type="submit">Like</button>
             {{tweet.likes}} Likes
         </div>
+
 
     </div>
     {% endfor %}
