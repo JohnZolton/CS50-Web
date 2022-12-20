@@ -47,12 +47,12 @@
         <div class="display-date">
             {{tweet.time}}
         </div>
-        <div class="display-text">{{tweet.tweet}}</div>
+        <div class="display-text" id = 'body-{{tweet.id}}'>{{tweet.tweet}}</div>
         <div class="display-likes">
             {% if tweet.author == user %}
-            <button class="edit-btn" id='edit-btn-{{tweet.id}}' type="submit" data-id="{{tweet.id}}">Edit</button>
+            <button class="edit-btn" id='edit-btn-{{tweet.id}}' type="submit" data-id="{{tweet.id}}" data-type="edit">Edit</button>
             {% endif %}
-            <button class="like-btn" id='like-btn-{{tweet.id}}' type="submit" data-id="{{tweet.id}}" data-likes = {{tweet.likes}}>Like</button>
+            <button class="like-btn" id='like-btn-{{tweet.id}}' type="submit" data-id="{{tweet.id}}" data-likes = {{tweet.likes}} data-type="like">Like</button>
             <div class= 'likecount' id="container-{{tweet.id}}">
                 {% if tweet.likes == 1 %}
                 {{tweet.likes}} Like

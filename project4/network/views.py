@@ -7,6 +7,8 @@ from .models import *
 import datetime
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
+
 
 from .models import User
 
@@ -147,7 +149,7 @@ def following(request):
         'tweets':tweets,
     })
 
-@csrf_exempt
+
 def like(request):
     if request.method == 'POST':
         jsonData = json.loads(request.body)
@@ -164,7 +166,7 @@ def like(request):
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-@csrf_exempt
+
 def unlike(request):
 
     if request.method == 'POST':
@@ -181,4 +183,19 @@ def unlike(request):
         cur_tweet.save()
         response_data = {'likes': cur_tweet.likes}
 
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+#@csrf_exempt # probs return later
+def edit(request):
+    if request.method == "POST":
+        jsonData = json.loads(request.body)
+        tweet_id = jsonData.get('tweet_id')
+        tweet_body = jsonData.get('body')
+        
+        cur_tweet = tweet.objects.get(id=tweet_id)
+        cur_tweet.tweet = tweet_body
+        cur_tweet.time = timezone.now()
+        cur_tweet.save()
+
+        response_data = {'tweet_body': tweet_body}
         return HttpResponse(json.dumps(response_data), content_type="application/json")

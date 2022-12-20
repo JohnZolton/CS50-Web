@@ -5,11 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll('button').forEach(function(button) {
         button.onclick = function() {
+            var csrf = getCookie('csrftoken');
 
             let twt = button.dataset.id
+
             if (this.dataset.type === 'like') {
                 fetch('like', {
                     method: 'POST',
+                    headers:{'X-CSRFToken': csrf},
                     body: JSON.stringify({
                         tweet_id: twt,
                         like_count: this.dataset.likes
@@ -17,11 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   })
                   .then(response => response.json())
                   .then(result => {
-                      // Print result
-                      console.log(result);
-                      console.log(result['likes'])
-                      let like_count = parseInt(result['likes'])
-                      console.log(like_count)
+                    let like_count = parseInt(result['likes'])
                       
                     let address = `#container-${this.dataset.id}`;
       
@@ -37,18 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.dataset.type === 'unlike') {
                 fetch('unlike', {
                     method: 'POST',
+                    headers:{'X-CSRFToken': csrf},
                     body: JSON.stringify({
                         tweet_id: twt,
                         like_count: this.dataset.likes})
                     })
                     .then(response => response.json())
                     .then(result => {
-                        // Print result
-                        console.log(result);
-                        console.log(result['likes'])
-                        let like_count = parseInt(result['likes'])
-                        console.log(like_count)
-                        
+                    let like_count = parseInt(result['likes'])
+
                     let address = `#container-${this.dataset.id}`;
         
                     if (like_count == 1) {
@@ -58,42 +54,52 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     document.querySelector(`#${this.id}`).innerText = 'Like';
                     this.dataset.type = 'like'
-                    }) 
-            }
+                    })}
 
             if (this.dataset.type === 'save'){
                 let area_address = `#text-${this.id}`
-                console.log(area_address)
-                let tweet_body = document.querySelector(area_address).innerHTML;
-                console.log(tweet_body)
-                console.log('savebutton hit!')
-                /*
-                fetch('update',{
+                let tweet_body = document.querySelector(area_address).value;
+
+                fetch('edit',{
                     method:'POST',
+                    headers:{'X-CSRFToken': csrf},
                     body: JSON.stringify({
                         tweet_id: twt,
-                        body: this.dataset.likes})
+                        body: tweet_body})
                     })
                     .then(response => response.json())
                     .then(result => {
-                        // Print result
-                        console.log(result);
-                        console.log(result['likes'])
-                        let like_count = parseInt(result['likes'])
-                        console.log(like_count)
+                        let newbody = result['tweet_body']
+                        document.querySelector(`#${this.id}`).innerHTML= 'Edit'
+                        this.dataset.type = 'edit';
+                        document.querySelector(`#body-${this.dataset.id}`).innerHTML = newbody;
                 })
-                */
-               this.dataset.type = 'edit';
-               document.querySelector(`#${this.id}`).innerText = 'Edit';
             }
             if (this.dataset.type === 'edit'){
-                console.log(this.body)
                 let address = `#body-${this.dataset.id}`
                 let tweet_body = document.querySelector(address).innerHTML;
+
                 this.dataset.type = 'save'
                 document.querySelector(`#${this.id}`).innerText = 'Save';
-                document.querySelector(address).innerHTML=  `<textarea id='text-${this.id}' maxlength="140" cols= "49" rows="4">${tweet_body}</textarea>`;
+                document.querySelector(address).innerHTML=  `<textarea class='editbox' id='text-${this.id}' maxlength="140" rows="4">${tweet_body}</textarea>`;
             }
         }
     });
  });
+
+
+ function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
