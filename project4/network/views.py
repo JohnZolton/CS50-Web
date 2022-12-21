@@ -11,15 +11,23 @@ from django.http import JsonResponse
 from django.shortcuts import render
 import time
 from django.core.paginator import Paginator
-
+from django.forms.models import model_to_dict
 from .models import User
+import json
+from django.core import serializers
 
 
 def index(request):
     tweets = tweet.objects.all()
+
+    p = Paginator(tweets, 10)
+    page_num=request.GET.get('page')
+    tweet_obj = p.get_page(page_num)
+
     return render(request, "network/index.html", {
-        'tweets': tweets
+        'tweets': tweet_obj
     })
+
 
 
 def login_view(request):

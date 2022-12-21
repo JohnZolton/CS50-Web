@@ -7,7 +7,11 @@
             u/{{user_profile.username}}
         </div>
         <div class="followers" id="follower_count">
+            {% if follower_count == 1%}
+            {{follower_count}} Follower
+            {% else %}
             {{follower_count}} Followers
+            {% endif %}
         </div>
         <div class="following">
             {{following_count}} Following

@@ -19,7 +19,4 @@ urlpatterns = [
     path("like", views.like, name="like"),
     path("unlike", views.unlike, name="unlike"),
     path("edit", views.edit, name="edit"),
-
-
-    
 ]

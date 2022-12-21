@@ -198,3 +198,41 @@
     border-radius: 5px;
     background-color: rgba(128, 128, 128, 0.137);
 }
+
+.nav-box {
+    margin-left:auto;
+    margin-right: auto;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+.pagination > li > a
+{
+    background-color: white;
+    color: black;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: black !Important;
+    border: solid 1px Black !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: Black !Important;
+    border: solid 1px Black;
+}
