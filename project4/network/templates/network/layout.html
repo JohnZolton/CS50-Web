@@ -12,41 +12,56 @@
 
 
     </head>
-    <body>
+    <body class="page-display">
+        <div class="sidenav">
+            <div class = 'nav-container'>
+                <nav class="navbar flex-column  navbar-light bg-light">
+                    <a class="navbar-brand" href="#">Network</a>
+                  
+                    <div>
+                      <ul class="navbar-nav mr-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                {% if 'user' in request.path %}
+                                <a class="nav-link active" href='{% url "viewprofile" user %}'><strong>{{ user.username }}</strong></a>
+                                {% else %}
+                                <a class="nav-link" href='{% url "viewprofile" user %}'><strong>{{ user.username }}</strong></a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                          {% if request.path == '/' %}
+                            <a class="nav-link active"  href="{% url 'index' %}">All Posts</a>
+                          {% else %}
+                            <a class="nav-link"  href="{% url 'index' %}">All Posts</a>
+                          {% endif %}
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                {% if "/following" in request.path %}
+                                <a class= "nav-link active" href="{% url 'following' %}">Following</a>
+                                {% else %}
+                                <a class="nav-link"  class="nav-link" href="{% url 'following' %}">Following</a>
+                                {% endif %}
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            </li>
+                        {% endif %}
+                      </ul>
+                    </div>
+                  </nav>
+                </div>
+        </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Network</a>
-          
-            <div>
-              <ul class="navbar-nav mr-auto">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href='{% url "viewprofile" user %}'><strong>{{ user.username }}</strong></a>
-                    </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'following' %}">Following</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-              </ul>
-            </div>
-          </nav>
-        
-        <div class="body">
+        <div class="body" style="grid-column:2">
             {% block body %}
             {% endblock %}
         </div>

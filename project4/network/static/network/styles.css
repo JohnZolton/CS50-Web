@@ -1,4 +1,28 @@
+.page-display {
+    display: grid;
+    grid-template-columns: 250px auto 250px;
+}
+
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 150px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #F8F9FA;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+
+.nav-container {
+    grid-column:1; 
+    justify-content: left; 
+    text-align: left;
+}
+
 .tweetbox {
+    margin-top:10px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -206,12 +230,13 @@
     text-align: center;
 }
 
-
-
 .pagination > li > a
 {
-    background-color: white;
+    background-color: rgba(128, 128, 128, 0.137);;
     color: black;
+    border: 1px solid black;
+
+
 }
 
 .pagination > li > a:focus,
@@ -220,13 +245,13 @@
 .pagination > li > span:hover
 {
     color: #5a5a5a;
-    background-color: #eee;
-    border-color: #ddd;
+    border-color: black;
+    transform: scale(1.1);
+
 }
 
 .pagination > .active > a
 {
-    color: white;
     background-color: black !Important;
     border: solid 1px Black !Important;
 }
