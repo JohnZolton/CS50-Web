@@ -19,13 +19,10 @@ def index(request):
 
 def login_view(request):
     if request.method == "POST":
-
-        # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
 
-        # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
@@ -47,7 +44,6 @@ def register(request):
         username = request.POST["username"]
         email = request.POST["email"]
 
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
@@ -55,7 +51,6 @@ def register(request):
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
@@ -82,17 +77,10 @@ def yourlist(request):
     })
 
 def newlisting(request):
-    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-
-        # create a form instance and populate it with data from the request:
         form = NewList(request.POST, request.FILES)
-        files = request.FILES
-        # check whether it's valid:
+
         if form.is_valid():
-            
-            # process the data in form.cleaned_data as required
-            # need to pull the user_id of seller
             item = listings(
                 Title= form.cleaned_data['Title'],
                 Description=form.cleaned_data['Description'],
@@ -103,12 +91,8 @@ def newlisting(request):
 
                 Seller = request.user
             )
-
             item.save()
-            # redirect to a new URL:
             return HttpResponseRedirect(reverse("index"))
-
-    # if a GET (or any other method) we'll create a blank form
     else:
         form = NewList()
 
@@ -161,7 +145,7 @@ def listing(request, item):
             item = listings.objects.get(id=item_id)
             user_id = request.user
             new_watch = watchlist(user=user_id, items=item)
-            # check if saved 
+
             if not is_watched:
                 new_watch.save()
                 is_watched = True
@@ -177,7 +161,6 @@ def listing(request, item):
             
             if allbids.aggregate(Max('amount'))['amount__max']:
                 maxbid = allbids.aggregate(Max('amount'))['amount__max']
-
             else:
                 maxbid = float(item.Starting_bid)
 
@@ -206,8 +189,6 @@ def listing(request, item):
             item.Active=False
             item.save()
             ans.Active=False
-
-            
 
     return render(request, "auctions/listing.html", {'item':ans,
         "timeleft": time,
