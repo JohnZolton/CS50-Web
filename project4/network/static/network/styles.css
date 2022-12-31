@@ -3,7 +3,31 @@
     --hover_color: rgba(255, 255, 255, 0.137);;
 }
 
+.page-display {
+    display: grid;
+    grid-template-columns: 250px auto 250px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 150px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #F8F9FA;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+.nav-container {
+    grid-column:1; 
+    justify-content: left; 
+    text-align: left;
+}
+
 .tweetbox {
+    margin-top:10px;
     margin-left: auto;
     margin-right: auto;
     max-width: 400px;
@@ -213,12 +237,11 @@
     text-align: center;
 }
 
-
-
 .pagination > li > a
 {
-    background-color: white;
+    background-color: rgba(128, 128, 128, 0.137);;
     color: black;
+    border: 1px solid black;
 }
 
 .pagination > li > a:focus,
@@ -227,13 +250,12 @@
 .pagination > li > span:hover
 {
     color: #5a5a5a;
-    background-color: #eee;
-    border-color: #ddd;
+    border-color: black;
+    transform: scale(1.1);
 }
 
 .pagination > .active > a
 {
-    color: white;
     background-color: black !Important;
     border: solid 1px Black !Important;
 }
