@@ -7,14 +7,10 @@ from .models import *
 import datetime
 import json
 from django.utils import timezone
-from django.http import JsonResponse
 from django.shortcuts import render
-import time
 from django.core.paginator import Paginator
-from django.forms.models import model_to_dict
-from .models import User
 import json
-from django.core import serializers
+
 
 
 def index(request):
@@ -27,7 +23,6 @@ def index(request):
     return render(request, "network/index.html", {
         'tweets': tweet_obj
     })
-
 
 
 def login_view(request):
@@ -81,8 +76,8 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+
 def newtweet(request):
-    
     if request.method=='POST':
         text = request.POST['body']
         user_id = request.user.id
@@ -94,7 +89,7 @@ def newtweet(request):
             likes = 0
         )
         newtweet.save()
-        #return HttpResponseRedirect(reverse("index"))
+
     return HttpResponseRedirect(request.POST['page'])
 
 def viewprofile(request, username):
@@ -106,7 +101,7 @@ def viewprofile(request, username):
     follows_you = False
     is_following = False
 
-    profile_info, t = follows.objects.get_or_create(account=profile)
+    profile_info, _ = follows.objects.get_or_create(account=profile)
 
     follower_count = profile_info.followers.all().count()
     following_count = profile_info.following.all().count()
@@ -114,12 +109,9 @@ def viewprofile(request, username):
     if cur_user in profile_info.followers.all():
         is_following=True
 
-    user_follow_info, t = follows.objects.get_or_create(account=cur_user)
+    user_follow_info, _ = follows.objects.get_or_create(account=cur_user)
     if cur_user in user_follow_info.following.all():
         follows_you=True
-
-
-
 
     return render(request, "network/profile.html", {
         'user_profile': profile,
@@ -130,13 +122,13 @@ def viewprofile(request, username):
         'follows_you': follows_you
     })
 
+
 def following(request):
     if not request.user.id:
         return HttpResponseRedirect(reverse('login'))
     
     user = User.objects.get(id=request.user.id)
-
-    users_following, t = follows.objects.get_or_create(account=user)
+    users_following, _ = follows.objects.get_or_create(account=user)
 
     accs_followed = users_following.following.all()
     accounts = User.objects.filter(id__in=accs_followed)
@@ -149,8 +141,8 @@ def following(request):
 
 def like(request):
     if request.method == 'POST':
-        jsonData = json.loads(request.body)
-        tweet_id = jsonData.get('tweet_id')
+        jsondata = json.loads(request.body)
+        tweet_id = jsondata.get('tweet_id')
 
         cur_tweet = tweet.objects.get(id=tweet_id)
         user = User.objects.get(id=request.user.id)
@@ -163,20 +155,16 @@ def like(request):
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-
 def unlike(request):
-
     if request.method == 'POST':
-        jsonData = json.loads(request.body)
-        tweet_id = jsonData.get('tweet_id')
+        jsondata = json.loads(request.body)
+        tweet_id = jsondata.get('tweet_id')
 
         cur_tweet = tweet.objects.get(id=tweet_id)
         user = User.objects.get(id=request.user.id)
         cur_tweet.likers.remove(user)
         
         cur_tweet.likes = cur_tweet.likers.all().count()
-
-        print(cur_tweet.likes)
         cur_tweet.save()
         response_data = {'likes': cur_tweet.likes}
 
@@ -185,9 +173,9 @@ def unlike(request):
 
 def edit(request):
     if request.method == "POST":
-        jsonData = json.loads(request.body)
-        tweet_id = jsonData.get('tweet_id')
-        tweet_body = jsonData.get('body')
+        jsondata = json.loads(request.body)
+        tweet_id = jsondata.get('tweet_id')
+        tweet_body = jsondata.get('body')
         
         cur_tweet = tweet.objects.get(id=tweet_id)
         cur_tweet.tweet = tweet_body
@@ -197,10 +185,11 @@ def edit(request):
         response_data = {'tweet_body': tweet_body}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+
 def follow(request):
     if request.method == "POST":
-        jsonData = json.loads(request.body)
-        acc_id = jsonData.get('acc_to_follow')
+        jsondata = json.loads(request.body)
+        acc_id = jsondata.get('acc_to_follow')
         cur_user = User.objects.get(id=request.user.id)
         acc_obj = User.objects.get(username=acc_id)
         
@@ -215,10 +204,11 @@ def follow(request):
         response_data = {'followers': followers}
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+
 def unfollow(request):
     if request.method == "POST":
-        jsonData = json.loads(request.body)
-        acc_id = jsonData.get('acc_to_follow')
+        jsondata = json.loads(request.body)
+        acc_id = jsondata.get('acc_to_follow')
         cur_user = User.objects.get(id=request.user.id)
         acc_obj = User.objects.get(username=acc_id)
         

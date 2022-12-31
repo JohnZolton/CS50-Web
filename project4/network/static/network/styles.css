@@ -1,148 +1,151 @@
+:root {
+    --background_gray: rgba(128, 128, 128, 0.137);
+    --hover_color: rgba(255, 255, 255, 0.137);;
+}
+
 .tweetbox {
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
     max-width: 400px;
     text-align: center;
 }
 
 #newtweet {
-    width:100%;
-    display: block;
-    padding: 10px;
     border: 1px solid black;
-    resize: none;
+    background-color: var(--background_gray);
+    border-radius: 10px;    
+    display: block;
     overflow:auto;
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.137);
+    padding: 10px;
+    resize: none;
+    width:100%;
 }
-#newtweet:focus {
-    background-color: rgba(255, 255, 255, 0.137);
 
+#newtweet:focus {
+    background-color: var(--hover_color);
 }
 
 #tweet-btn-box {
-    text-align: right;
     margin-top: 5px;
+    text-align: right;
 }
 
 #tweet-btn {
-    border-radius: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
     background-color: rgb(80, 105, 247);
-    color: white;
     border: 1px solid rgb(71, 71, 71);
+    border-radius: 10px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px; 
 }
 
 #tweet-btn:hover {
-    transform: scale(1.1);
     border: 2px solid black;
+    transform: scale(1.1);
 }
 
 .displaybox {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    text-align: left;
-    max-width: 400px;
+    background-color: var(--background_gray);
+    border: 1px solid black;
+    border-radius: 10px;
     display: grid;
     grid-template-columns: 2;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px; 
+    max-width: 400px;
     padding: 5px;
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.137);
-    border: 1px solid black;
+    text-align: left;
 }
 
 .displaybox:hover{
     background: rgba(209, 208, 208, 0.137);
-
 }
 
 .display-author{
     grid-column: 1;
     margin-left: 5px;
-
 }
 
 .display-date{
-    grid-column: 2;
-    text-align: right;
     font-size: small;
+    grid-column: 2;
     opacity: 80%;
-
+    text-align: right;
 }
+
 .display-text{
     grid-column: 1 / span 2;
 }
+
 .display-likes{
-    grid-column: 1/ span 2;
-    text-align: right;
     display: grid;
+    grid-column: 1 / span 2;
     grid-template-columns: auto auto max-content;
+    text-align: right;
 }
 
 .edit-btn {
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.137);
-    color: black;
     border: 1px solid rgb(71, 71, 71);
+    border-radius: 10px;
+    background-color: var(--background_gray);
+    color: black;
     grid-column: 1;
     justify-self: left;
-    text-align: left;
     padding: 3px;
     padding-left:10px;
     padding-right:10px;
+    text-align: left;
 }
 
 .edit-btn:hover {
-    background-color: rgba(255, 255, 255, 0.137);
+    background-color: var(--hover_color);
 }
 .edit-btn:active {
-    background-color: rgba(128, 128, 128, 0.137);
+    background-color: var(--background_gray);
 }
 .like-btn {
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.137);
-    color: black;
     border: 1px solid rgb(71, 71, 71);
+    background-color: var(--background_gray);
+    border-radius: 10px;
+    color: black;
     grid-column: 2;
     justify-self: right;
-    text-align: right;
     padding: 3px;
     padding-left:10px;
     padding-right:10px;
+    text-align: right;
 }
 
 .likecount{
     grid-column: 3;
-    width: fit-content;
     justify-self: right;
-    padding-left:8px;
     padding: 3px;
+    padding-left:8px;
+    width: fit-content;
+}
 
-}
 .like-btn:hover {
-    background-color: rgba(255, 255, 255, 0.137);
+    background-color: var(--hover_color);
 }
+
 .like-btn:active {
-    background-color: rgba(128, 128, 128, 0.137);
+    background-color: var(--background_gray);
 }
 
 .profilebox {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-
-    text-align: left;
-    max-width: 600px;
+    background-color: var(--background_gray);
+    border: 1px solid black;
+    border-radius: 10px;
     display: grid;
     grid-template-columns: 3;
     grid-template-rows: 2;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    max-width: 600px;
     padding: 10px;
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.137);
-    border: 1px solid black;
+    text-align: left;
 }
 
 .profilename{
@@ -151,58 +154,62 @@
     padding-left: 10px;
 }
 .following {
-    grid-row: 2;
     grid-column: 1;
-}
-.followers {
     grid-row: 2;
+}
+
+.followers {
     grid-column: 2;
+    grid-row: 2;
 }
 
 .follow-btn-container {
-    grid-row:2; 
     grid-column:3; 
+    grid-row:2; 
     justify-self: right;
 }
 
 .follow-btn {
-    justify-self: right;
+    background-color: var(--background_gray);
+    border: 1px solid black;
+    border-radius: 10px;    
     grid-row: 2;
     grid-column: 3;
-    width:fit-content;
+    justify-self: right;
     padding: 5px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.137);
+    width:fit-content;
 }
+
 .follow-btn:hover {
-    background-color: rgba(255, 255, 255, 0.137);
+    background-color: var(--hover_color);
 }
+
 .follow-btn {
-    justify-self: right;
+    background-color: var(--background_gray);
+    border: 1px solid black;
+    border-radius: 10px;    
     grid-row: 2;
     grid-column: 3;
-    width:fit-content;
+    justify-self: right;
     padding: 5px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.137);
+    width:fit-content; 
 }
+
 .follow-btn:hover {
-    background-color: rgba(255, 255, 255, 0.137);
+    background-color: var(--hover_color);
 }
 
 .editbox {
-    width: 100%;
-    resize: none;
+    background-color: var(--background_gray);
     border-radius: 5px;
-    background-color: rgba(128, 128, 128, 0.137);
+    resize: none;
+    width: 100%;
 }
 
 .nav-box {
+    justify-content: center;
     margin-left:auto;
     margin-right: auto;
-    justify-content: center;
     text-align: center;
 }
 
