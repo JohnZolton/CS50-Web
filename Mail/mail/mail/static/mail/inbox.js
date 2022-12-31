@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-
-
-  // By default, load the inbox
   load_mailbox('inbox');
-  // Use buttons to toggle between views
+
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
@@ -36,12 +33,8 @@ function sendmail() {
           body: mailbody
       })
     })
-    .then(response => response.json())
-    .then(result => {
-        // Print result
-        console.log(result);
-    })
-    .then(()=>load_mailbox('sent'));
+    .then(response => response.json()
+    .then(()=>load_mailbox('sent')));
     return false;
   }
 ;
@@ -50,10 +43,6 @@ function getmail(mailbox) {
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
   .then(emails => {
-    // Print emails
-    console.log(emails);
-    
-    // ... do something else with emails ...
     emails.forEach(element => showmail(element));
 })
 };
@@ -68,10 +57,8 @@ function showmail(item) {
     element.style.background = 'white'
   };
   element.id = 'mailbox'
-  console.log(document.querySelector('#cur-user').innerHTML);
   element.addEventListener('click', function() {
     getthatmail(item.id);
-    console.log(item.id);
   });
   document.querySelector('#emails-view').append(element);
 };
@@ -80,10 +67,7 @@ function getthatmail(item) {
   fetch(`/emails/${item}`)
   .then(response => response.json())
   .then(email => {
-    // Print emails
-    console.log(email);
-
-    // need to wipe display clean and show email
+    // wipe display clean and show email
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#compose-view').style.display = 'none';
     document.querySelector('#spec-email').style.display = 'block';
@@ -113,7 +97,6 @@ function reply_mail(email) {
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
   document.querySelector('#spec-email').style.display = 'none';
-  console.log(email)
   document.querySelector('#compose-recipients').value = email.sender;
   document.querySelector('#compose-subject').value = email.subject;
   document.querySelector('#compose-body').value = '';  
@@ -148,7 +131,6 @@ function send_archive() {
 };
   
 function load_mailbox(mailbox) {
-  
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
