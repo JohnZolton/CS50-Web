@@ -12,11 +12,11 @@ git clone --depth 1 --filter=blob:none --sparse https://github.com/JohnZolton/CS
 # Go into the repository
 cd CS50-Web
 
-# check out commerce
-git sparse-checkout set commerce
+# check out Mail
+git sparse-checkout set Mail
 
 # Go into the directory
-cd commerce
+cd Mail/mail
 
 # Install dependencies
 pip install -r requirements.txt
