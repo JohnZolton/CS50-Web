@@ -1,7 +1,7 @@
 ![](2023-01-01-13-24-19.gif)
 
 ## How To Use
-To clone and run this application, you'll need [Git](https://git-scm.com/) and [Django](https://www.djangoproject.com/). 
+To clone and run this application, you'll need [Git](https://git-scm.com/) and [Python](https://www.python.org/) and [Django](https://www.djangoproject.com/). 
 ```
 # Clone this repository
 git clone --depth 1 --filter=blob:none --sparse https://github.com/JohnZolton/CS50-Web
