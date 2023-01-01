@@ -1,7 +1,7 @@
 ![](2023-01-01-13-07-12.gif)
 
 ## How To Use
-To clone and run this application, you'll need [Git](https://git-scm.com/), [Django](https://www.djangoproject.com/) and [Pillow](https://pillow.readthedocs.io/en/stable/). 
+To clone and run this application, you'll need [Git](https://git-scm.com/), [Python](https://www.python.org/), [Django](https://www.djangoproject.com/) and [Pillow](https://pillow.readthedocs.io/en/stable/). 
 ```
 # Clone this repository
 git clone --depth 1 --filter=blob:none --sparse https://github.com/JohnZolton/CS50-Web
