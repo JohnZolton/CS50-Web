@@ -8,16 +8,26 @@ alt="IMAGE ALT TEXT HERE" width="560" height="315" border="10"  /></a>
 " target="_blank">(Youtube Link)</a>
 </p>
 
-**Specification**:
+## How To Use
+To clone and run this application, you'll need [Git](https://git-scm.com/), [Django](https://www.djangoproject.com/) and [Pillow](https://pillow.readthedocs.io/en/stable/). 
+```
+# Clone this repository
+git clone --depth 1 --filter=blob:none --sparse https://github.com/JohnZolton/CS50-Web
 
-- **Models**: Your application should have at least three models in addition to the User model: one for auction listings, one for bids, and one for comments made on auction listings. It’s up to you to decide what fields each model should have, and what the types of those fields should be. You may have additional models if you would like.
-- **Create Listing**: Users should be able to visit a page to create a new listing. They should be able to specify a title for the listing, a text-based description, and what the starting bid should be. Users should also optionally be able to provide a URL for an image for the listing and/or a category (e.g. Fashion, Toys, Electronics, Home, etc.).
-- **Active Listings Page**: The default route of your web application should let users view all of the currently active auction listings. For each active listing, this page should display (at minimum) the title, description, current price, and photo (if one exists for the listing).
-- **Listing Page**: Clicking on a listing should take users to a page specific to that listing. On that page, users should be able to view all details about the listing, including the current price for the listing.
-  - If the user is signed in, the user should be able to add the item to their “Watchlist.” If the item is already on the watchlist, the user should be able to remove it.
-  - If the user is signed in, the user should be able to bid on the item. The bid must be at least as large as the starting bid, and must be greater than any other bids that have been placed (if any). If the bid doesn’t meet those criteria, the user should be presented with an error.
-  - If the user is signed in and is the one who created the listing, the user should have the ability to “close” the auction from this page, which makes the highest bidder the winner of the auction and makes the listing no longer active.
-  - If a user is signed in on a closed listing page, and the user has won that auction, the page should say so.
-  - Users who are signed in should be able to add comments to the listing page. The listing page should display all comments that have been made on the listing.
-- **Watchlist**: Users who are signed in should be able to visit a Watchlist page, which should display all of the listings that a user has added to their watchlist. Clicking on any of those listings should take the user to that listing’s page.
-- **Categories**: Users should be able to visit a page that displays a list of all listing categories. Clicking on the name of any category should take the user to a page that displays all of the active listings in that category.
+# Go into the directory
+cd CS50-Web
+
+# check out commerce
+git sparse-checkout set commerce
+
+# Go into the repository
+cd commerce
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+python manage.py runserver
+```
+## Description
+This is an e-commerce auction web app akin to eBay or facebook marketplace. Users can create new listings to auction off items, with optional categories and pictures. Users can place bids on listings, comment on listings, see the current price and see the time remaining. The owner of a listing can close bidding at any time. Then the winner can see if they won a given item.
