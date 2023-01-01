@@ -1,3 +1,5 @@
+![](2023-01-01-13-24-19.gif)
+
 ## How To Use
 To clone and run this application, you'll need [Git](https://git-scm.com/) and [Django](https://www.djangoproject.com/). 
 ```
