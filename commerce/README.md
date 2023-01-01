@@ -1,12 +1,4 @@
-<p align ='center'>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=ux4rXEOuZLI
-" target="_blank"><img  src="http://img.youtube.com/vi/ux4rXEOuZLI/0.jpg" 
-alt="IMAGE ALT TEXT HERE" width="560" height="315" border="10"  /></a>
-</p>
-<p align ='center'>
-  <a href="http://www.youtube.com/watch?feature=player_embedded&v=ux4rXEOuZLI
-" target="_blank">(Youtube Link)</a>
-</p>
+![](2023-01-01-13-07-12.gif)
 
 ## How To Use
 To clone and run this application, you'll need [Git](https://git-scm.com/), [Django](https://www.djangoproject.com/) and [Pillow](https://pillow.readthedocs.io/en/stable/). 
