@@ -34,7 +34,7 @@ function sendmail() {
       })
     })
     .then(response => response.json()
-    .then(()=>load_mailbox('sent')));
+    .then(() => load_mailbox('sent')));
     return false;
   }
 ;
@@ -79,7 +79,7 @@ function getthatmail(item) {
     document.querySelector('#timestamp').innerHTML = `<strong>Timestamp: </strong>${email.timestamp}`;
     document.querySelector('#archive-btn').addEventListener('click', send_archive);
     document.querySelector('#reply-btn').addEventListener('click', () => reply_mail(email));
-    if (email.archived===false){
+    if (email.archived === false){
       document.querySelector('#archive-btn').innerHTML = 'Archive'
     } else {
       document.querySelector('#archive-btn').innerHTML = 'Remove from Archive'

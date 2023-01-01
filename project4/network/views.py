@@ -73,7 +73,7 @@ def register(request):
 
 
 def newtweet(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         text = request.POST['body']
         user_id = request.user.id
         user = User.objects.get(id=user_id)
@@ -102,11 +102,11 @@ def viewprofile(request, username):
     following_count = profile_info.following.all().count()
 
     if cur_user in profile_info.followers.all():
-        is_following=True
+        is_following = True
 
     user_follow_info, _ = follows.objects.get_or_create(account=cur_user)
     if cur_user in user_follow_info.following.all():
-        follows_you=True
+        follows_you = True
 
     return render(request, "network/profile.html", {
         'user_profile': profile,
