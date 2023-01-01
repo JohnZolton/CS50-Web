@@ -14,13 +14,13 @@ To clone and run this application, you'll need [Git](https://git-scm.com/), [Dja
 # Clone this repository
 git clone --depth 1 --filter=blob:none --sparse https://github.com/JohnZolton/CS50-Web
 
-# Go into the directory
+# Go into the repository
 cd CS50-Web
 
 # check out commerce
 git sparse-checkout set commerce
 
-# Go into the repository
+# Go into the directory
 cd commerce
 
 # Install dependencies
