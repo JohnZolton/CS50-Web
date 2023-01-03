@@ -8,6 +8,10 @@ import datetime
 from .models import *
 from django.db.models import Max
 from django.urls import resolve
+import pyotp
+import time
+
+
 
 def index(request):
     return render(request, "auctions/index.html", {
@@ -62,6 +66,31 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+def settings(request):
+    return render(request, 'auctions/settings.html')
+
+def twofactor(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+    print(user.otpkey)
+    if not user.otpkey:
+        user.otpkey = pyotp.random_base32()
+        user.save()
+    totp = pyotp.TOTP(user.otpkey)
+    print("Current OTP:", totp.now())
+    code = pyotp.totp.TOTP(user.otpkey).provisioning_uri(name=user.email, issuer_name='Secure App')
+    print(code)
+    context = {'code':code}
+
+    if request.method == 'GET':
+        return render(request, 'auctions/2fa.html', context)
+    elif request.method == 'POST':
+        code = request.POST['auth_code']
+        
+        if code == totp.now():
+            print('SUCCESS')
+        return render(request, 'auctions/2fa.html', context)
 
 def yourlist(request):
     user_id = request.user
