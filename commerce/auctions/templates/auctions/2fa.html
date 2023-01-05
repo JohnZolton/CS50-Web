@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body%}
+
+{% if user.twofactorenabled %}
+<p>Disable Two Factor Authentication?</p>
+<div>
+    <form action="twofactor" method="post">
+        {% csrf_token %}
+        <label for="code">Enter Your Code:</label>
+        <input type="text" name="auth_code">
+        <input type="hidden" value="disable" name="formtype">
+        <input type="submit" value="Disable">
+    </form>
+</div>
+{% else %}
+<div style="background-color: white; width:fit-content;">
+    {% load qr_code %}
+    {% qr_from_text code size="m" %}
+</div>
+
+<div>
+    <form action="twofactor" method="post">
+        {% csrf_token %}
+        <label for="code">Enter Your Code:</label>
+        <input type="text" name="auth_code">
+        <input type="hidden" value="enable" name="formtype">
+        <input type="submit" value="Enter">
+    </form>
+
+
+</div>
+{% endif %}
+{% endblock %}

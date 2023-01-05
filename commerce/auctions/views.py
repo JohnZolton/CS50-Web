@@ -8,6 +8,10 @@ import datetime
 from .models import *
 from django.db.models import Max
 from django.urls import resolve
+import pyotp
+import time
+
+
 
 def index(request):
     return render(request, "auctions/index.html", {
@@ -22,6 +26,9 @@ def login_view(request):
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+        
+        if user.twofactorenabled:
+            return render(request, 'auctions/twofactorlogin.html', {'user_id':user.id})
 
         if user is not None:
             login(request, user)
@@ -32,6 +39,21 @@ def login_view(request):
             })
     else:
         return render(request, "auctions/login.html")
+
+def twofactorlogin(request):
+    if request.method == 'POST':
+        user_id = request.POST['user']
+        user = User.objects.get(id=user_id)
+        code = request.POST['auth_code']
+        totp = pyotp.TOTP(user.otpkey)
+        if code == totp.now():
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, 'auctions/twofactorlogin.html', {
+                'user_id':user.id,
+                'message':'Incorrect Code'
+                })
 
 
 def logout_view(request):
@@ -62,6 +84,35 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+def settings(request):
+    return render(request, 'auctions/settings.html')
+
+def twofactor(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+
+    if not user.otpkey:
+        user.otpkey = pyotp.random_base32()
+        user.save()
+    totp = pyotp.TOTP(user.otpkey)
+    code = pyotp.totp.TOTP(user.otpkey).provisioning_uri(name=user.email, issuer_name='Secure App')
+    context = {'code':code}
+
+    if request.method == 'GET':
+        return render(request, 'auctions/2fa.html', context)
+
+    elif request.method == 'POST':
+        code = request.POST['auth_code']
+        if code == totp.now():
+            if request.POST['formtype'] == 'enable':
+                user.twofactorenabled = True
+                user.save()
+            elif request.POST['formtype'] == 'disable':
+                user.twofactorenabled = False
+                user.save()
+            return HttpResponseRedirect(reverse('settings'))
+    return render(request, 'auctions/2fa.html', context)
 
 def yourlist(request):
     user_id = request.user

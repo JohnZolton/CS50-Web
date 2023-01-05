@@ -8,7 +8,8 @@ class User(AbstractUser):
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(max_length=30)
     password = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    creditcard = models.CharField(max_length=19, blank=True, null=True, unique=True)
+    otpkey = models.CharField(max_length=32, blank=True, null=True, default=None)
+    twofactorenabled= models.BooleanField(default=False)
     
     def __str__(self):
         return f'{self.username}'

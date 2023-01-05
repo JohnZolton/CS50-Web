@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body%}
+
+
+<div>
+    <div>{{message}}</div>
+    <form action="twofactorlogin" method="post">
+        {% csrf_token %}
+        <label for="code">Enter Your Code:</label>
+        <input type="hidden" name="user" value="{{ user_id }}">
+        <input type="text" name="auth_code">
+        <input type="submit" value="Enter">
+    </form>
+
+
+</div>
+
+{% endblock %}
