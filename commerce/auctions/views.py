@@ -26,6 +26,9 @@ def login_view(request):
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+        
+        if user.twofactorenabled:
+            return render(request, 'auctions/twofactorlogin.html', {'user_id':user.id})
 
         if user is not None:
             login(request, user)
@@ -36,6 +39,21 @@ def login_view(request):
             })
     else:
         return render(request, "auctions/login.html")
+
+def twofactorlogin(request):
+    if request.method == 'POST':
+        user_id = request.POST['user']
+        user = User.objects.get(id=user_id)
+        code = request.POST['auth_code']
+        totp = pyotp.TOTP(user.otpkey)
+        if code == totp.now():
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, 'auctions/twofactorlogin.html', {
+                'user_id':user.id,
+                'message':'Incorrect Code'
+                })
 
 
 def logout_view(request):
@@ -87,10 +105,14 @@ def twofactor(request):
     elif request.method == 'POST':
         code = request.POST['auth_code']
         if code == totp.now():
-            user.twofactorenabled = True
-            user.save()
+            if request.POST['formtype'] == 'enable':
+                user.twofactorenabled = True
+                user.save()
+            elif request.POST['formtype'] == 'disable':
+                user.twofactorenabled = False
+                user.save()
             return HttpResponseRedirect(reverse('settings'))
-        return render(request, 'auctions/2fa.html', context)
+    return render(request, 'auctions/2fa.html', context)
 
 def yourlist(request):
     user_id = request.user

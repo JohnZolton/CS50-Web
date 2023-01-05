@@ -11,6 +11,7 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path("newlisting", views.newlisting, name="newlisting"),
     path('twofactor', views.twofactor, name='twofactor'),
+    path('twofactorlogin', views.twofactorlogin, name='twofactorlogin'),
     path('yourlist', views.yourlist, name='yourlist'),
     path('categories', views.category, name='category'),
     path('categories/<str:category>', views.getcategory, name='getcategory'),
