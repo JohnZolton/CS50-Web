@@ -114,6 +114,23 @@ def twofactor(request):
             return HttpResponseRedirect(reverse('settings'))
     return render(request, 'auctions/2fa.html', context)
 
+def email(request):
+    return render(request, 'auctions/changeemail.html')
+
+def changemail(request):
+    if request.method == 'POST':
+        new_email = request.POST['new_email']
+        confirmation = request.POST['confirmation']
+
+        if new_email == confirmation:
+            user = User.objects.get(id=request.user.id)
+            user.email = new_email
+            user.save()    
+            return HttpResponseRedirect(reverse('settings'))
+        else:
+            context = {'message':"Error: emails didn't match"}
+            return render(request, 'auctions/changeemail.html', context)
+
 def yourlist(request):
     user_id = request.user
     mylist = watchlist.objects.filter(user=user_id).values()

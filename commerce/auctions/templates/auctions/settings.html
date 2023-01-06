@@ -2,7 +2,11 @@
 
 
 {% block body%}
-<p>Change Email</p>
+<a href="{% url 'email' %}">Change Email</a>
 <p>Change Password</p>
+{% if user.twofactorenabled %}
+<a href="{% url 'twofactor' %}">Disable Two-Factor Authentication</a>
+{% else %}
 <a href="{% url 'twofactor' %}">Enable Two-Factor Authentication</a>
+{% endif %}
 {% endblock %}
