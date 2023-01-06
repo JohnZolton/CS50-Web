@@ -10,7 +10,7 @@ from django.db.models import Max
 from django.urls import resolve
 import pyotp
 import time
-
+from django.contrib.auth.hashers import check_password, make_password
 
 
 def index(request):
@@ -122,14 +122,36 @@ def changemail(request):
         new_email = request.POST['new_email']
         confirmation = request.POST['confirmation']
 
-        if new_email == confirmation:
+        if new_email == confirmation and '@' in new_email:
             user = User.objects.get(id=request.user.id)
             user.email = new_email
             user.save()    
             return HttpResponseRedirect(reverse('settings'))
         else:
-            context = {'message':"Error: emails didn't match"}
+            context = {'message':"Error: enter valid emails"}
             return render(request, 'auctions/changeemail.html', context)
+
+def changepass(request):
+    if request.method == 'POST':
+        old_pass = request.POST['old_pass']
+        new_pass = request.POST['new_pass']
+        confirmation = request.POST['confirmation']
+
+        user = User.objects.get(id=request.user.id)
+        
+        if check_password(old_pass, user.password):
+            if new_pass==confirmation:
+                user.password = make_password(new_pass, hasher='default')
+                user.save()
+                login(request, user)
+                return HttpResponseRedirect(reverse('settings'))
+            else:
+                message = 'Passwords did not match'
+        else:
+            message = 'Invalid old password'
+        return render(request, 'auctions/changepass.html', {'message':message})
+    else:
+        return render(request, 'auctions/changepass.html')
 
 def yourlist(request):
     user_id = request.user

@@ -13,6 +13,7 @@ urlpatterns = [
     path('twofactor', views.twofactor, name='twofactor'),
     path('email', views.email, name='email'),
     path('changemail', views.changemail, name='changemail'),
+    path('changepass', views.changepass, name='changepass'),
     path('twofactorlogin', views.twofactorlogin, name='twofactorlogin'),
     path('yourlist', views.yourlist, name='yourlist'),
     path('categories', views.category, name='category'),
