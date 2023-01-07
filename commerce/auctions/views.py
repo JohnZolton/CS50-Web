@@ -1,30 +1,26 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .forms import *
 import datetime
 from .models import *
 from django.db.models import Max
-from django.urls import resolve
 import pyotp
-import time
 from django.contrib.auth.hashers import check_password, make_password
 
 
 def index(request):
-    return render(request, "auctions/index.html", {
-        "listings": listings.objects.all(),
-        "today": datetime.datetime.now()
+    return render(request, 'auctions/index.html', {
+        'listings': listings.objects.all(),
+        'today': datetime.datetime.now()
     })
 
-
-
 def login_view(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         
         if user.twofactorenabled:
@@ -32,13 +28,13 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse('index'))
         else:
-            return render(request, "auctions/login.html", {
-                "message": "Invalid username and/or password."
+            return render(request, 'auctions/login.html', {
+                'message': 'Invalid username and/or password.'
             })
     else:
-        return render(request, "auctions/login.html")
+        return render(request, 'auctions/login.html')
 
 def twofactorlogin(request):
     if request.method == 'POST':
@@ -48,42 +44,40 @@ def twofactorlogin(request):
         totp = pyotp.TOTP(user.otpkey)
         if code == totp.now():
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse('index'))
         else:
             return render(request, 'auctions/twofactorlogin.html', {
                 'user_id':user.id,
                 'message':'Incorrect Code'
                 })
 
-
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
-
+    return HttpResponseRedirect(reverse('index'))
 
 def register(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
 
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
+        password = request.POST['password']
+        confirmation = request.POST['confirmation']
         if password != confirmation:
-            return render(request, "auctions/register.html", {
-                "message": "Passwords must match."
+            return render(request, 'auctions/register.html', {
+                'message': 'Passwords must match.'
             })
 
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "auctions/register.html", {
-                "message": "Username already taken."
+            return render(request, 'auctions/register.html', {
+                'message': 'Username already taken.'
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse('index'))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, 'auctions/register.html')
 
 def settings(request):
     return render(request, 'auctions/settings.html')
@@ -128,8 +122,21 @@ def changemail(request):
             user.save()    
             return HttpResponseRedirect(reverse('settings'))
         else:
-            context = {'message':"Error: enter valid emails"}
+            context = {'message':'Error: enter valid emails'}
             return render(request, 'auctions/changeemail.html', context)
+
+def changeusername(request):
+    if request.method == 'GET':
+        return render(request, 'auctions/changeusername.html')
+    if request.method == 'POST':
+        new_username = request.POST['new_name']
+        confirmation = request.POST['confirmation']
+        if new_username==confirmation:
+            user = User.objects.get(id=request.user.id)
+            user.username = new_username
+            user.save()
+            return HttpResponseRedirect(reverse('settings'))
+        return render(request, 'auctions/changeusername.html', {'message':'Error: usernames did not match'})
 
 def changepass(request):
     if request.method == 'POST':
@@ -161,8 +168,8 @@ def yourlist(request):
         obj_ids.append(item['items_id'])
     obj_list = listings.objects.filter(id__in = obj_ids)
 
-    return render(request, "auctions/yourlist.html", {
-        "listings": obj_list
+    return render(request, 'auctions/yourlist.html', {
+        'listings': obj_list
     })
 
 def newlisting(request):
@@ -181,7 +188,7 @@ def newlisting(request):
                 Seller = request.user
             )
             item.save()
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse('index'))
     else:
         form = NewList()
 
@@ -279,22 +286,23 @@ def listing(request, item):
             item.save()
             ans.Active=False
 
-    return render(request, "auctions/listing.html", {'item':ans,
-        "timeleft": time,
+    return render(request, 'auctions/listing.html', {'item':ans,
+        'timeleft': time,
         'form': form,
         'comments': item_comments,
         'is_watched':is_watched,
         'is_bidder': is_seller,
-        "is_winner": is_winner})
+        'is_winner': is_winner})
 
-def category(request):
-    category_choices = [
+category_choices = [
     ('1', 'Fashion'),
     ('2', 'Toys'),
     ('3', 'Electronics'),
     ('4', 'Home'),
     ('5', 'Hardware')
 ]
+
+def category(request):
     categories = []
     for _, x in category_choices:
         categories.append(x)
@@ -302,13 +310,6 @@ def category(request):
     return render(request, 'auctions/categories.html', {'categories': categories})
 
 def getcategory(request, category):
-    category_choices = [
-    ('1', 'Fashion'),
-    ('2', 'Toys'),
-    ('3', 'Electronics'),
-    ('4', 'Home'),
-    ('5', 'Hardware')
-]
     for x, y in category_choices:
         if y == category:
             options = listings.objects.filter(Category=x)
