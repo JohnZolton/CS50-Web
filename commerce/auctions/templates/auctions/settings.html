@@ -2,14 +2,22 @@
 
 
 {% block body%}
-<p>
-    <a href="{% url 'email' %}">Change Email</a>
-</p>
-    <a href="{% url 'changepass' %}">Change Password</a>
-</p>
-{% if user.twofactorenabled %}
-<a href="{% url 'twofactor' %}">Disable Two-Factor Authentication</a>
-{% else %}
-<a href="{% url 'twofactor' %}">Enable Two-Factor Authentication</a>
-{% endif %}
+<div>
+    <h2 style="margin:20px;">Settings</h2>
+    <div class="settingsitem">
+        <a class="link" style="padding:10px;  border: 2px solid black" href="{% url 'email' %}">Change Email</a>
+    </div>
+    <div class="settingsitem">
+        <a class="link" style="padding:10px; margin:20px; border: 2px solid black" href="{% url 'changepass' %}">Change Password</a>
+    </div>
+    <div class="settingsitem">
+        {% if user.twofactorenabled %}
+        <a class="link" style="padding:10px; margin:20px; border: 2px solid black" href="{% url 'twofactor' %}">Disable Two-Factor Authentication</a>
+        {% else %}
+        <a class="link" style="padding:10px; margin:20px; border: 2px solid black" href="{% url 'twofactor' %}">Enable Two-Factor Authentication</a>
+        {% endif %} 
+    </div>
+
+</div>
+
 {% endblock %}

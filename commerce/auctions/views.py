@@ -161,7 +161,6 @@ def yourlist(request):
         obj_ids.append(item['items_id'])
     obj_list = listings.objects.filter(id__in = obj_ids)
 
-    print(obj_list)
     return render(request, "auctions/yourlist.html", {
         "listings": obj_list
     })

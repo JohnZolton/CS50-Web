@@ -2,21 +2,29 @@
 
 
 {% block body%}
-<p>Change Email</p>
+<h2>Change Email</h2>
 
-<div>
-    <div>{{message}}</div>
-    <form action="changemail" method="post">
-        {% csrf_token %}
-        <div>
-            <label for='newemail'>New Email:</label>
-            <input type="email" name="new_email">
-        </div>
-        <div>
-            <label for='newemail'>Confirm Address:</label>
-            <input type="email" name="confirmation">
-        </div>
-        <input type="submit" value="Change">
+<div class="settings">
+    <div class="settingsblock">
+        <div>{{message}}</div>
+        <form action="changemail" method="post">
+            {% csrf_token %}
+            <div>
+                <label for='newemail'>New Email:</label>
+                <input type="email" name="new_email">
+            </div>
+            <div>
+                <label for='newemail'>Confirm Address:</label>
+                <input type="email" name="confirmation">
+            </div>
+            <input type="submit" value="Change">
+        </form>
+    </div>
+
+</div>
+<div >
+    <form action ="{% url 'settings' %}" >
+        <button class="link" type="submit"><strong>Settings</strong></button>
     </form>
 </div>
 

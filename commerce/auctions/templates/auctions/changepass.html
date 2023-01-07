@@ -2,25 +2,36 @@
 
 
 {% block body%}
-<p>Change Password</p>
+<h2>Change Password</h2>
 
-<div>
+<div class="settings">
     <div>{{message}}</div>
-    <form action="changepass" method="post">
-        {% csrf_token %}
-        <div>
-            <label for='old_pass'>Old Password:</label>
-            <input type="password" name="old_pass">
-        </div>
-        <div>
-            <label for='new_pass'>New Password:</label>
-            <input type="password" name="new_pass">
-        </div>
-        <div>
-            <label for='confirmation'>Confirm New Password:</label>
-            <input type="password" name="confirmation">
-        </div>
-        <input type="submit" value="Change">
+    <div class="settingsblock">
+        <form action="changepass" method="post">
+            {% csrf_token %}
+            <div>
+                <label for='old_pass'>Old Password:</label>
+                <input type="password" name="old_pass">
+            </div>
+            <div>
+                <label for='new_pass'>New Password:</label>
+                <input type="password" name="new_pass">
+            </div>
+            <div>
+                <label for='confirmation'>Confirm New Password:</label>
+                <input type="password" name="confirmation">
+            </div>
+            <div style="text-align:right; margin-top: 10px">
+                <input type="submit" value="Change">
+            </div>
+           
+        </form>
+    </div>
+
+</div>
+<div >
+    <form action ="{% url 'settings' %}" >
+        <button class="link" type="submit"><strong>Settings</strong></button>
     </form>
 </div>
 
