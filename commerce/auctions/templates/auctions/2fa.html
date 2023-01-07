@@ -4,7 +4,7 @@
 {% block body%}
 
 {% if user.twofactorenabled %}
-<p>Disable Two Factor Authentication?</p>
+<h2>Disable Two Factor Authentication?</h2>
 <div>
     <form action="twofactor" method="post">
         {% csrf_token %}
@@ -15,21 +15,35 @@
     </form>
 </div>
 {% else %}
-<div style="background-color: white; width:fit-content;">
-    {% load qr_code %}
-    {% qr_from_text code size="m" %}
+<h2>Enable Two Factor Authentication</h2>
+<div class = "settingsblock" style="width:fit-content; margin-left: auto; margin-right: auto;">
+    <div class="settings" style="margin-bottom: 10px;background-color: white; width:fit-content;">
+        {% load qr_code %}
+        {% qr_from_text code size="m" %}
+    </div>
+    <div class="settings">
+        <form action="twofactor" method="post">
+            {% csrf_token %}
+            <label for="code">Enter Your Code:</label>
+            <input type="text" name="auth_code">
+            <input type="hidden" value="enable" name="formtype">
+            <div style="text-align:right;">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
 </div>
 
-<div>
-    <form action="twofactor" method="post">
-        {% csrf_token %}
-        <label for="code">Enter Your Code:</label>
-        <input type="text" name="auth_code">
-        <input type="hidden" value="enable" name="formtype">
-        <input type="submit" value="Enter">
-    </form>
+
+<div class="settings">
+
 
 
 </div>
 {% endif %}
+<div >
+    <form action ="{% url 'settings' %}" >
+        <button class="link" type="submit"><strong>Settings</strong></button>
+    </form>
+</div>
 {% endblock %}

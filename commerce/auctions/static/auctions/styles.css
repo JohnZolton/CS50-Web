@@ -180,3 +180,33 @@ input[type=number] {
     text-align: center;
     width: 50%;
 }
+
+.settings {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 2;
+}
+
+.settingsblock {  
+        background-color: #37393f;
+        border: 2px solid black;
+        border-radius: 10px;
+        color: white;
+        margin: 20px;
+        padding: 20px;
+        grid-template-columns: 100px auto;
+}
+
+.settingsinfo {
+    grid-column: 1;
+    margin-top: 30px;
+}
+
+.settingsbutton {
+    margin-top: 30px;
+    grid-column: 2;
+}
+

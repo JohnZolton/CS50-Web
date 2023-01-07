@@ -11,10 +11,15 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path("newlisting", views.newlisting, name="newlisting"),
     path('twofactor', views.twofactor, name='twofactor'),
+    path('email', views.email, name='email'),
+    path('changemail', views.changemail, name='changemail'),
+    path('changeusername', views.changeusername, name='changeusername'),
+    path('changepass', views.changepass, name='changepass'),
     path('twofactorlogin', views.twofactorlogin, name='twofactorlogin'),
     path('yourlist', views.yourlist, name='yourlist'),
     path('categories', views.category, name='category'),
     path('categories/<str:category>', views.getcategory, name='getcategory'),
     path('<str:item>', views.listing, name='listing'),
+
 ]
 

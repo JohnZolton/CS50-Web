@@ -2,7 +2,37 @@
 
 
 {% block body%}
-<p>Change Email</p>
-<p>Change Password</p>
-<a href="{% url 'twofactor' %}">Enable Two-Factor Authentication</a>
+<h2 style="margin:20px;">Settings</h2>
+<div class="settings">
+    <div class="settingsinfo" style="margin-top:0px;">
+        Username: {{user.username}}
+    </div>
+    <div class="settingsbutton" style="margin-top:0px;">
+        <a class="link" style="padding:10px;  border: 2px solid black" href="{% url 'changeusername' %}">Change Username</a>
+    </div>
+    <div class="settingsinfo">
+        Email: {{user.email}}
+    </div>
+    <div class="settingsbutton">
+        <a class="link" style="padding:10px;  border: 2px solid black" href="{% url 'email' %}">Change Email</a>
+    </div>
+    <div class="settingsinfo">
+        Password: ********
+    </div>
+    <div class="settingsbutton">
+        <a class="link" style="padding:10px; margin:20px; border: 2px solid black" href="{% url 'changepass' %}">Change Password</a>
+    </div>
+    <div class="settingsinfo">
+        2FA: {% if user.twofactorenabled %} Enabled {% else %} Disabled {% endif %}
+    </div>
+    <div class="settingsbutton">
+        {% if user.twofactorenabled %}
+        <a class="link" style="padding:10px; margin:20px; border: 2px solid black" href="{% url 'twofactor' %}">Disable Two-Factor Authentication</a>
+        {% else %}
+        <a class="link" style="padding:10px; margin:20px; border: 2px solid black" href="{% url 'twofactor' %}">Enable Two-Factor Authentication</a>
+        {% endif %} 
+    </div>
+
+</div>
+
 {% endblock %}

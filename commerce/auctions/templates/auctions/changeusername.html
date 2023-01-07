@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body%}
+<h2>Change Username</h2>
+
+<div class="settings">
+    <div class="settingsblock">
+        <form action="changeusername" method="post">
+            {% csrf_token %}
+            <div>
+                <label for='new_name' style="text-align:left">New Username:</label>
+                <input type="text" name="new_name">
+            </div>
+            <div>
+                <label for='confirmation'>Confirm Username:</label>
+                <input type="text" name="confirmation">
+            </div>
+            <div>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+        <div>{{message}}</div>
+    </div>
+
+</div>
+<div >
+    <form action ="{% url 'settings' %}" >
+        <button class="link" type="submit"><strong>Settings</strong></button>
+    </form>
+</div>
+
+{% endblock %}

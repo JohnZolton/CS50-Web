@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body%}
+<h2>Change Password</h2>
+
+<div class="settings">
+    <div>{{message}}</div>
+    <div class="settingsblock">
+        <form action="changepass" method="post">
+            {% csrf_token %}
+            <div>
+                <label for='old_pass'>Old Password:</label>
+                <input type="password" name="old_pass">
+            </div>
+            <div>
+                <label for='new_pass'>New Password:</label>
+                <input type="password" name="new_pass">
+            </div>
+            <div>
+                <label for='confirmation'>Confirm New Password:</label>
+                <input type="password" name="confirmation">
+            </div>
+            <div style="margin-top: 10px">
+                <input type="submit" value="Change">
+            </div>
+           
+        </form>
+    </div>
+
+</div>
+<div >
+    <form action ="{% url 'settings' %}" >
+        <button class="link" type="submit"><strong>Settings</strong></button>
+    </form>
+</div>
+
+{% endblock %}
